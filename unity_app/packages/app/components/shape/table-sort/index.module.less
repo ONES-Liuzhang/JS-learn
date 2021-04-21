@@ -1,0 +1,42 @@
+@w : 20px;
+@sw : @w * .9;
+@c : #ccc;
+
+.box {
+  display: inline-block;
+  width: @w;
+  height: @w;
+  // background-color: cyan;
+  position: relative;
+  overflow: hidden;
+
+}
+
+.down,
+.up {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: @sw * .5 solid;
+  left: 50%;
+  transform: translateX(-50%);
+  border-color: transparent;
+}
+
+.up {
+  border-bottom-color: @c;
+  top: -@sw * .5;
+
+  &:hover {
+    border-bottom-color: @primary-color;
+  }
+}
+
+.down {
+  border-top-color: @c ;
+  bottom: -@sw * .5;
+
+  &:hover {
+    border-top-color: @primary-color;
+  }
+}

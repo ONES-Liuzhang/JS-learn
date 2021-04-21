@@ -1,0 +1,44 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script type="text/javascript" src="./observable.js"></script>
+	</head>
+	<body>
+		<div id="content">
+			<button id="reduce">-</button>
+			<span id="num"></span>
+			<button id="increase">+</button>
+		</div>
+		<script type="text/javascript">
+			// -------双向绑定数据预处理
+			let vm = {
+				data: {
+					message: "好的吧",
+					num: 0,
+				},
+			};
+			console.log(`111${vm}`);
+			observe(vm.data);
+
+			Object.keys(vm.data).map((key) => {
+				w = new Watcher(vm, key, (val) => {
+					console.log("改变绑定值", val);
+				});
+			});
+
+			// ---------Dom操作
+			let el = document.getElementById("num");
+			el.innerHTML = vm.data.num;
+			document.getElementById("reduce").addEventListener("click", function () {
+				vm.data.num > 0 ? vm.data.num-- : "";
+			});
+			document
+				.getElementById("increase")
+				.addEventListener("click", function () {
+					vm.data.num++;
+				});
+		</script>
+	</body>
+</html>

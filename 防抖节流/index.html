@@ -1,0 +1,25 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script src="./debounce.js"></script>
+		<script src="./throttle.js"></script>
+	</head>
+	<body>
+		<p><input id="ipt1" /></p>
+		<p><input id="ipt2" /></p>
+	</body>
+	<script>
+		var ipt1 = document.getElementById("ipt1");
+		var ipt2 = document.getElementById("ipt2");
+		let deb = debounce((e) => {
+			console.log(e.target.value);
+		}, 500);
+		let thro = throttle((e) => {
+			console.log(e.target.value);
+		}, 1000);
+		ipt1.addEventListener("input", deb);
+		ipt2.addEventListener("input", thro);
+	</script>
+</html>

@@ -1,0 +1,83 @@
+@import '../../style/themes/default';
+@import '../../style/mixins/index';
+
+@message-prefix-cls: ~'@{ant-prefix}-message';
+
+.@{message-prefix-cls} {
+  .reset-component;
+  position: fixed;
+  top: 16px;
+  left: 0;
+  z-index: @zindex-message;
+  width: 100%;
+  pointer-events: none;
+
+  &-notice {
+    padding: 8px;
+    text-align: center;
+    &:first-child {
+      margin-top: -8px;
+    }
+  }
+
+  &-notice-content {
+    display: inline-block;
+    height: 40px;
+    line-height: 40px ;
+    // padding: @message-notice-content-padding;
+    background: @component-background;
+    border-radius: @border-radius-base;
+    box-shadow: @shadow-2;
+    pointer-events: all;
+    border-radius: 2px ;
+    padding-right: 10px ;
+  }
+
+
+  &-success .@{iconfont-css-prefix} {
+    background-color:  @success-color;
+  }
+
+  &-error .@{iconfont-css-prefix} {
+    background-color:@error-color;
+  }
+
+  &-warning .@{iconfont-css-prefix} {
+    background-color: @warning-color;
+  }
+
+  &-info .@{iconfont-css-prefix},
+  &-loading .@{iconfont-css-prefix} {
+    background-color: @info-color;
+  }
+
+  .@{iconfont-css-prefix} {
+    position: relative;
+    height: 40px;
+    width: 40px ;
+    margin-right: 10px;
+    font-size: @font-size-lg;
+    color: #FFFFFF;
+    vertical-align: top;
+    padding-top: (40 - @font-size-lg) * .5  ;
+  }
+
+  &-notice.move-up-leave.move-up-leave-active {
+    overflow: hidden;
+    animation-name: MessageMoveOut;
+    animation-duration: 0.3s;
+  }
+}
+
+@keyframes MessageMoveOut {
+  0% {
+    max-height: 150px;
+    padding: 8px;
+    opacity: 1;
+  }
+  100% {
+    max-height: 0;
+    padding: 0;
+    opacity: 0;
+  }
+}

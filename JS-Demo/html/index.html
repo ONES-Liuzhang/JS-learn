@@ -1,0 +1,26 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<script type="text/javascript">
+			window.onload = () => {
+				let inputElm = document.getElementById("ipt");
+				let buttonElm = document.getElementById("btn");
+
+				inputElm.addEventListener("input", (val) => {
+					console.log("value change:", val);
+				});
+				setTimeout(() => {
+					inputElm.value = 100;
+				}, 3000);
+			};
+		</script>
+	</head>
+	<body>
+		<div>
+			<input id="ipt" role="error" />
+			<button id="btn">点击我</button>
+		</div>
+	</body>
+</html>

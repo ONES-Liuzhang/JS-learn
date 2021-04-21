@@ -1,0 +1,23 @@
+{
+  "name": "eslint-demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/preset-env": "^7.13.12",
+    "eslint": "^7.22.0",
+    "eslint-plugin-vue": "^7.8.0",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-inject": "^5.0.5",
+    "gulp-sourcemaps": "^3.0.0"
+  }
+}

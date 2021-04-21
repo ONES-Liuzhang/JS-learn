@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>单例模式Modal弹窗</title>
+		<script type="text/javascript" src="./modal.js"></script>
+		<style>
+			#modal {
+				position: absolute;
+				width: 200px;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<button id="btn">点击弹窗</button>
+			<button id="btn2">点击弹窗</button>
+		</div>
+	</body>
+	<script type="text/javascript">
+		document.getElementById("btn").addEventListener("click", function () {
+			let dialog = Dialog.getInstance();
+			dialog.show();
+		});
+		document.getElementById("btn2").addEventListener("click", function () {
+			let dialog = Dialog.getInstance();
+			dialog.show();
+		});
+	</script>
+</html>

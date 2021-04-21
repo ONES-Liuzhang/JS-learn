@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>重绘和重排</title>
+    <style>
+        .box{
+            height: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+        .item {
+            position: absolute;
+            transition-timing-function: linear;
+            transition-property: top;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <ul class="box" id="box">
+            <li class="item">aaaaa</li>
+            <li class="item">222222</li>
+            <li class="item">33333</li>
+        </ul>
+    </div>
+</body>
+<script type="text/javascript">
+    const box = document.getElementById('box')
+    const childrens = box.childNodes
+    childrens.forEach((item, index) => {
+        if(item.nodeName == '#text') return
+        const distance = 20 * (index + 1)
+        const duration = distance / 20
+        item.style.top = -distance + 'px'
+        item.style.transitionDuration = duration + "s"
+    })
+
+    setTimeout(() => {
+        childrens.forEach((item, index) => {
+            if(item.nodeName == '#text') return
+            item.style.top = '20px'
+        })
+    })
+</script>
+</html>

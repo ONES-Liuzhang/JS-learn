@@ -1,0 +1,22 @@
+[
+	{
+		"path": "$ROOTPATH$/.vscode/settings.json",
+		"bookmarks": [
+			{
+				"line": 135,
+				"column": 12,
+				"label": "配置文件"
+			}
+		]
+	},
+	{
+		"path": "$ROOTPATH$/packages/base/src/home/home.tsx",
+		"bookmarks": [
+			{
+				"line": 13,
+				"column": 10,
+				"label": "首页"
+			}
+		]
+	}
+]

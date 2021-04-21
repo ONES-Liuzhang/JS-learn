@@ -1,0 +1,21 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Preload</title>
+		<script type="text/javascript" src="./virtual-proxy.js"></script>
+		<script type="text/javascript">
+			window.onload = () => {
+				let imgNode = document.getElementById("image");
+				let preloadImg = new PreloadImage(imgNode);
+				let imgProxy = new PreloadImageProxy(preloadImg);
+				imgProxy.setSrc("./pic1.jpeg");
+			};
+		</script>
+	</head>
+	<body>
+		<div>
+			<img id="image" />
+		</div>
+	</body>
+</html>

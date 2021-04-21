@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>arrow_left_gray备份</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="2_图标按钮" transform="translate(-273.000000, -598.000000)">
+            <g id="arrow_left_gray备份" transform="translate(285.000000, 610.000000) scale(-1, 1) translate(-285.000000, -610.000000) translate(273.000000, 598.000000)">
+                <g id="编组-21" transform="translate(12.000000, 12.000000) scale(-1, 1) translate(-12.000000, -12.000000) ">
+                    <rect id="矩形" fill="#D1D1D1" x="0" y="0" width="24" height="24" rx="12"></rect>
+                    <g id="编组-19" transform="translate(9.942857, 6.000000)" stroke="#FFFFFF" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="-0.286611652" y1="8.66161165" x2="6.96338835" y2="8.66161165" id="直线-8" transform="translate(3.338388, 8.661612) rotate(-45.000000) translate(-3.338388, -8.661612) "></line>
+                        <line x1="-0.286611652" y1="3.33838835" x2="6.96338835" y2="3.33838835" id="直线-8" transform="translate(3.338388, 3.338388) scale(-1, 1) rotate(-225.000000) translate(-3.338388, -3.338388) "></line>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
