@@ -1,0 +1,29 @@
+(function (modules) {
+  var installedModules = {};
+
+  function __webpack_require__(moduleId) {
+    // 获取缓存的module
+    if (installedModules[moduleId]) {
+      return installedModules[moduleId];
+    }
+
+    var module = (installedModules[moduleId] = {
+      id: moduleId,
+      l: false,
+      exports: {},
+    });
+
+    // 执行模块函数
+    modules[moduleId].call(module.exports, module.exports, __webpack_require__);
+    module.l = true;
+    return module.exports;
+  }
+
+  return __webpack_require__(__webpack_require__.s = "<%-entryPath%>")
+})({
+  <% for(const key in modules) { %>
+    "<%- key %>": (function(module, exports, __webpack_require__) {
+      eval(<%- modules[key] %> )
+    }),
+  <% } %>
+});

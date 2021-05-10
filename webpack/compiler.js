@@ -4,6 +4,7 @@ const parser = require("@babel/parser"); // 把代码解析为AST
 const t = require("@babel/types"); // 替换AST的内容
 const traverse = require("@babel/traverse").default; // 遍历AST树
 const generator = require("@babel/generator").default; // 根据AST生成代码
+const ejs = require("ejs");
 
 class Compiler {
   constructor(options) {
@@ -14,8 +15,28 @@ class Compiler {
     this.entryPath = "";
   }
 
+  emit() {
+    const { modules, entryPath, options } = this;
+    const outputPath = path.resolve(this.root, options.output.path);
+    const filename = options.output.filename;
+    // 创建文件夹
+    if (!fs.existsSync(outputPath)) {
+      fs.mkdirSync(outputPath);
+    }
+
+    // 把modules和entryPath注入到模板中
+    ejs
+      .renderFile(path.join(__dirname, "./lib/template.ejs"), {
+        modules,
+        entryPath,
+      })
+      .then((code) => {
+        fs.writeFileSync(path.join(outputPath, filename), code);
+      });
+  }
+
   /**
-   *
+   * 把源码中的require替换为__webpack_require__
    * @param {*} source 源码
    * @param {*} dirname 当前文件所在路径
    * @returns
@@ -41,6 +62,7 @@ class Compiler {
             throw new Error(`没有找到文件${modulePath}, 请检查后缀是否正确`);
           }
 
+          // 以当前文件路径为根路径，拼接path
           modulePath =
             "./" + path.join(dirname, modulePath).replace(/\\/g, "/");
           // TODO:: @babel/types 替换AST内容
@@ -94,6 +116,7 @@ class Compiler {
     const { entry } = this.options;
     const absEntryPath = path.resolve(this.root, entry);
     this.buildModule(absEntryPath, true);
+    this.emit();
   }
 
   /**
