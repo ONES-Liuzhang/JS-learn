@@ -124,7 +124,29 @@ class Compiler {
    * @param {*} modulePath 模块绝对路径
    */
   _getSource(modulePath) {
-    return fs.readFileSync(modulePath, "utf-8");
+    try {
+      const { options } = this;
+      const rules = options.modules.rules;
+      let content = fs.readFileSync(modulePath, "utf-8");
+
+      for (let i = 0; i < rules.length; i++) {
+        const { test, use } = rules[i];
+
+        // 找到匹配的第一条规则
+        if (test.test(modulePath)) {
+          // 链式调用use中的loader
+          let len = use.length - 1;
+          while (len >= 0) {
+            const loader = require(use[len--]);
+            content = loader(content);
+          }
+          return content;
+        }
+      }
+      return content;
+    } catch (err) {
+      throw new Error(`解析文件${modulePath}出错！`);
+    }
   }
 }
 

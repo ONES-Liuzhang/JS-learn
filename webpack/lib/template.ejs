@@ -14,7 +14,7 @@
     });
 
     // 执行模块函数
-    modules[moduleId].call(module.exports, module.exports, __webpack_require__);
+    modules[moduleId].call(module, module, module.exports, __webpack_require__);
     module.l = true;
     return module.exports;
   }

@@ -14,7 +14,7 @@
     });
 
     // 执行模块函数
-    modules[moduleId].call(module.exports, module.exports, __webpack_require__);
+    modules[moduleId].call(module, module, module.exports, __webpack_require__);
     module.l = true;
     return module.exports;
   }
@@ -23,7 +23,7 @@
 })({
   
     "./app.js": (function(module, exports, __webpack_require__) {
-      eval("const a = __webpack_require__(\"./js/moduleA.js\");\n\nconst b = __webpack_require__(\"./js/moduleB.js\");\n\nconsole.log(a);\nconsole.log(b);" )
+      eval("const a = __webpack_require__(\"./js/moduleA.js\");\n\nconst b = __webpack_require__(\"./js/moduleB.js\");\n\n__webpack_require__(\"./css/index.css\");\n\nconsole.log(a);\nconsole.log(b);" )
     }),
   
     "./js/moduleA.js": (function(module, exports, __webpack_require__) {
@@ -32,6 +32,10 @@
   
     "./js/moduleB.js": (function(module, exports, __webpack_require__) {
       eval("module.exports = \"b\";" )
+    }),
+  
+    "./css/index.css": (function(module, exports, __webpack_require__) {
+      eval("let style = document.createElement('style');\nstyle.innerHTML = \"body {\\n  font-size: 22px;\\n}\\n\";\ndocument.body.appendChild(style);" )
     }),
   
 });
