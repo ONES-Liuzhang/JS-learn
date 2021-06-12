@@ -1,12 +1,16 @@
 class DragDrop {
   constructor(el) {
+    const { offsetLeft, offsetTop, offsetParent } = el;
     this.el = el;
-    this.relative = {}; // 鼠标点击位置相对元素的位置
+    // 鼠标点击位置相对元素的位置
+    this.relative = {};
     // 初始化元素相对父元素的位置
     this.position = {
-      top: el.offsetTop,
-      left: el.offsetLeft,
+      top: offsetTop,
+      left: offsetLeft,
     };
+    this.parentEl = offsetParent;
+
     this.onMouseMove = this.onMouseMove.bind(this);
 
     el.addEventListener("mousedown", (e) => {
@@ -34,9 +38,18 @@ class DragDrop {
 
   onMouseMove(e) {
     // 新的鼠标位置
-    let { clientX, clientY } = e;
-    let el = this.el;
-    el.style.top = clientY - this.relative.top;
-    el.style.left = clientX - this.relative.left;
+    const { clientX, clientY } = e;
+    const el = this.el;
+    const parentEl = this.parentEl;
+    const { offsetWidth, offsetHeight } = el;
+    const { offsetWidth: parentWidth, offsetHeight: parentHeight } = parentEl;
+    el.style.top = Math.min(
+      Math.max(clientY - this.relative.top, 0),
+      parentHeight - offsetHeight
+    );
+    el.style.left = Math.min(
+      Math.max(clientX - this.relative.left, 0),
+      parentWidth - offsetWidth
+    );
   }
 }
