@@ -41,8 +41,11 @@ class DragDrop {
     const { clientX, clientY } = e;
     const el = this.el;
     const parentEl = this.parentEl;
+    // 使用offsetWidth和offsetHeight来获取元素宽度和高度 包含了border宽度
     const { offsetWidth, offsetHeight } = el;
-    const { offsetWidth: parentWidth, offsetHeight: parentHeight } = parentEl;
+    // 使用clentWidth和clientHeight获取父元素的宽度和高度 不包含border
+    const { clientWidth: parentWidth, clientHeight: parentHeight } = parentEl;
+    // 固定在父元素的范围内拖动
     el.style.top = Math.min(
       Math.max(clientY - this.relative.top, 0),
       parentHeight - offsetHeight
