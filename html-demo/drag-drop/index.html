@@ -1,0 +1,49 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style type="text/css">
+      div,
+      h2 {
+        margin: 0px;
+        padding: 0px;
+        box-sizing: border-box;
+      }
+      .content {
+        position: relative;
+        height: 500px;
+        border: 1px solid red;
+      }
+
+      .content > .drop1 {
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+        background-color: aquamarine;
+        text-align: center;
+        position: absolute;
+      }
+    </style>
+    <script src="./drag-drop.js"></script>
+    <title>拖拽效果</title>
+  </head>
+  <body>
+    <div class="box">
+      <h2>简单拖拽效果</h2>
+      <ul>
+        <li>鼠标按下，获取鼠标点击div的位置</li>
+        <li>鼠标移动，元素的位置 = 鼠标位置 - 刚才的差值</li>
+        <li>
+          鼠标放开，给鼠标和鼠标放开赋值null，除非再次点击，否则不会有任何移动效果
+        </li>
+      </ul>
+      <div class="content">
+        <div class="drop1" id="drop1">拖拽我</div>
+      </div>
+    </div>
+    <script type="text/javascript">
+      let drop1 = new DragDrop(document.getElementById("drop1"));
+    </script>
+  </body>
+</html>

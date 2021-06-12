@@ -65,9 +65,9 @@ class Compiler {
           // 以当前文件路径为根路径，拼接path
           modulePath =
             "./" + path.join(dirname, modulePath).replace(/\\/g, "/");
-          // TODO:: @babel/types 替换AST内容
+          // @babel/types 替换AST内容，替换依赖路径为相对于root的路径
           node.arguments = [t.stringLiteral(modulePath)];
-          // 保留该模块的依赖项
+          // 保留该模块的路径
           dependencies.push(modulePath);
         }
       },
@@ -106,7 +106,8 @@ class Compiler {
     // 保存module代码
     this.modules[moduleName] = JSON.stringify(sourceCode);
 
-    // 递归保存所有模块
+    // 收集依赖：
+    // 递归读取依赖文件，获取所有模块路径 保存在modules中
     dependencies.forEach((d) => {
       this.buildModule(path.join(this.root, d), false);
     });

@@ -1,0 +1,58 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>transform</title>
+    <link rel="stylesheet" href="index.css"></link>
+    <style>
+      .box {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        background-color: bisque;
+      }
+
+      .ball {
+        position: absolute;
+        left: 0%;
+        top: 0%;
+        transform: translate(-50%, -50%);
+        background-color: brown;
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        transition: left 1s linear, top 1s cubic-bezier(.77,.08,.99,.75);
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div class="desc">
+      <h2>Transform过渡</h2>
+      <p>transition</p>
+      <ul>
+        <li>transition-delay：延迟ms开始</li>
+        <li>transition-duration：持续时间</li>
+        <li>transition-property：指定属性</li>
+        <li>transition-timing-function：过渡函数</li>
+      </ul>
+      <p>例子🌰</p>
+      <section class="example">
+        <div class="box">
+          <div class="ball" id="ball"></div>
+        </div>
+        <button id="start">点击开始</button>
+      </section>
+    </div>
+    <script type="text/javascript">
+      let btn = document.getElementById('start')
+      let ball = document.getElementById('ball')
+
+      btn.addEventListener('click', function() {
+        ball.style.left = "100%"
+        ball.style.top = "100%"
+      })
+    </script>
+  </body>
+</html>

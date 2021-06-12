@@ -26,10 +26,10 @@ Ball.prototype = {
     const offsetY = top - y;
     this.translate({ x: -offsetX, y: -offsetY }); // 1、移动小球
     this.el.style.visibility = "visible"; // 2、显示小球
-    // 等待浏览器重绘完成
-    setTimeout(() => {
+    // 帧动画,下一帧开始动画
+    requestAnimationFrame(() => {
       this.startDrop(); // 3、开始下落
-    }, 20);
+    });
   },
   startDrop() {
     let styleKey = "transition";

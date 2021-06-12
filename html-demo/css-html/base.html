@@ -1,0 +1,98 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>基础</title>
+    <link rel="stylesheet" href="index.css"></link>
+    <style>
+      .box {
+        background-color: antiquewhite;
+        margin: 10px;
+        overflow: auto;
+      }
+      .box::after {
+        background-color:beige;
+        clear: both;
+      }
+
+      .nav {
+        /* 创建BFC */
+        display: flow-root;  
+      }
+
+      .nav li{
+        display: inline-block;
+        line-height: 50px;
+        margin: 0px 20px;
+      }
+
+      p, ul {
+        font-size: 14px;
+        color: blueviolet;
+        margin-top: 22px;
+        margin-bottom: 22px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Base</h1>
+    <header>
+      <nav>
+        <ul class="nav">
+          <li><a href="transform.html">Transform</a></li>
+          <li><a href="layout.html">Layout</a></li>
+          <li><a href="test.html">Test</a></li>
+        </ul>
+      </nav>
+    </header>
+    <div class="content">
+      <div class="box">
+        <h2>Block Content:</h2>
+        <div>div</div>
+        <table>
+          table
+        </table>
+        <form>form</form>
+        <h1>h1</h1>
+        <h2>h2</h2>
+        <p>p</p>
+        <pre>pre</pre>
+        <ul>
+          ul
+        </ul>
+        <section>section</section>
+      </div>
+      <div class="box">
+        <h2>Inline Block:</h2>
+        <p>描述：可以设置宽高、padding、margin</p>
+        <input />
+        <button>button</button>
+      </div>
+
+      <div class="box">
+        <h1>inline:</h1>
+        <p>行内元素分替换元素和非替换元素</p>
+        <ul>
+          <li>替换元素:像<code>img</code>、<code>input</code>这种用作其他内容占位符的元素</li>
+          <li>非替换元素:内容包含在文档内的元素，像<code>p</code>、<code>div</code>等</li>
+        </ul>
+
+        <h5>非替换元素：</h5>
+        <p>无法设置宽高，宽高由元素内容决定</p>
+        <p>行内非替换元素可以设置margin-left和margin-righ，上下外边距不生效</p>
+        <p>内边距生效，但是不会撑开父元素，设置背景时可见</p>
+        <span>span</span>
+
+        <h5>替换元素：</h5>
+        <p>img是行内替换元素，可设置宽高</p>
+        <p>内外边距都会影响宽高</p>
+        <img src="xx" style="margin: 10px;" />
+        <label>label</label>
+        <br />
+      </div>
+      <div class="box"></div>
+    </div>
+    <footer>Footer</footer>
+  </body>
+</html>

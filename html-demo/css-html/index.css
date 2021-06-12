@@ -1,0 +1,43 @@
+* {
+  box-sizing: border-box;
+}
+
+body,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+a,
+section,
+footer,
+header {
+  margin: 0px;
+  padding: 0px;
+}
+
+a {
+  text-decoration-line: none;
+}
+
+a,
+a:active {
+  color: black;
+}
+
+a:hover {
+  color: aqua;
+}
+
+header,
+footer {
+  background-color: yellow;
+  text-align: center;
+  min-height: 50px;
+}
+
+::selection {
+  background-color: beige;
+}
