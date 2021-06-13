@@ -10,13 +10,16 @@
         padding: 0px;
         box-sizing: border-box;
       }
+
       .content {
         position: relative;
         height: 500px;
         border: 1px solid red;
+        margin: 0px 0px 10px 0px;
+        display: flow-root;
       }
 
-      .content > .drop1 {
+      .content > .drop {
         width: 100px;
         height: 100px;
         border-radius: 50px;
@@ -26,28 +29,48 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        cursor: none;
+        cursor: default;
+      }
+      .content > .adsorbent {
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+        border: 1px dotted yellowgreen;
+        left: 50%;
+        top: 50%;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
       }
     </style>
     <script src="./drag-drop.js"></script>
     <title>拖拽效果</title>
   </head>
   <body>
+    <h2>简单拖拽效果</h2>
+    <ul>
+      <li>鼠标按下，获取鼠标点击div的位置</li>
+      <li>鼠标移动，元素的位置 = 鼠标位置 - 刚才的差值</li>
+      <li>
+        鼠标放开，给鼠标和鼠标放开赋值null，除非再次点击，否则不会有任何移动效果
+      </li>
+    </ul>
     <div class="box">
-      <h2>简单拖拽效果</h2>
-      <ul>
-        <li>鼠标按下，获取鼠标点击div的位置</li>
-        <li>鼠标移动，元素的位置 = 鼠标位置 - 刚才的差值</li>
-        <li>
-          鼠标放开，给鼠标和鼠标放开赋值null，除非再次点击，否则不会有任何移动效果
-        </li>
-      </ul>
       <div class="content">
-        <div class="drop1" id="drop1">拖拽我</div>
+        <div class="adsorbent" id="adsorbent">吸附</div>
+        <div class="drop" id="drop1">拖拽我</div>
+      </div>
+
+      <div class="content">
+        <div class="drop" id="drop2">拖拽我</div>
       </div>
     </div>
     <script type="text/javascript">
       let drop1 = new DragDrop(document.getElementById("drop1"));
+      let drop2 = new DragDrop(document.getElementById("drop2"));
+
+      drop1.adsorbent(document.getElementById("adsorbent"));
     </script>
   </body>
 </html>
