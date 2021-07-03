@@ -1,0 +1,18 @@
+div,
+ul,
+header,
+nav {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+
+a,
+a:active,
+a:hover {
+  color: #333333;
+}
+
+a {
+  text-decoration: none;
+}

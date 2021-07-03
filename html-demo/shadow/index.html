@@ -1,0 +1,27 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>Element.attachShadow</h1>
+      <div>
+        <p>shadow host</p>
+        <div id="shadow-host"></div>
+      </div>
+    </div>
+    <script>
+      let host = document.getElementById("shadow-host");
+      let shadow = host.attachShadow({ mode: "open" });
+      let para = document.createElement("p");
+      para.innerHTML = "aaa";
+      para.id = "para";
+      shadow.appendChild(para);
+      console.log(document.getElementById("para"));
+      console.log(shadow.getElementById("para"));
+    </script>
+  </body>
+</html>

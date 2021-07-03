@@ -1,0 +1,90 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bfc</title>
+    <style>
+      h1 {
+        font-size: 18px;
+        margin: 10px 0px;
+      }
+      .box {
+        display: flow-root;
+      }
+
+      .relative {
+        position: relative;
+      }
+
+      .absolute {
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>absolute</h1>
+      <!-- <div class="box relative">
+        <div class="absolute" style="background-color: bisque">
+          <p>absolute元素</p>
+          <div style="margin-bottom: 10px">margin-bottom: 10px</div>
+        </div>
+      </div> -->
+      <h1>overflow 不为visible</h1>
+      <div class="box">
+        <div class="bfc" style="overflow: hidden">
+          <div
+            style="margin: 10px 0px; background-color: beige; height: 50px"
+          ></div>
+        </div>
+        <div
+          style="margin: 10px 0px; background-color: beige; height: 50px"
+        ></div>
+      </div>
+
+      <h1>display: flow-root</h1>
+      <h1>float两列布局</h1>
+      <div class="box" style="margin: 0px 100px">
+        <div class="float-left" style="float: left; width: 100px">
+          <ul>
+            <li>1</li>
+            <li>2</li>
+          </ul>
+        </div>
+        <div class="right" style="overflow: hidden">
+          <p>
+            上面aside盒子有一个浮动属性，覆盖了main盒子的内容，main盒子没有清除aside盒子的浮动。只做了一个动作，就是触发自身的BFC，然后就不再被aside盒子覆盖了。所以：BFC的区域不会与float
+            box重叠
+          </p>
+          <p>
+            如果不构建一个bfc或者清除左侧浮动，文字会环绕float元素，就像这样
+          </p>
+          <p>创建一个bfc，overflow:hidden或者display:flow-root；</p>
+        </div>
+      </div>
+      <div class="box" style="margin: 0px 100px">
+        <div class="float-left" style="float: left; width: 100px">
+          <ul>
+            <li>1</li>
+            <li>2</li>
+          </ul>
+        </div>
+        <br style="clear: left" />
+        <div class="right">
+          <p>
+            上面aside盒子有一个浮动属性，覆盖了main盒子的内容，main盒子没有清除aside盒子的浮动。只做了一个动作，就是触发自身的BFC，然后就不再被aside盒子覆盖了。所以：BFC的区域不会与float
+            box重叠
+          </p>
+          <p>
+            如果不构建一个bfc或者清除左侧浮动，文字会环绕float元素，就像这样
+          </p>
+          <p>创建一个bfc，overflow:hidden或者display:flow-root；</p>
+          <p>或者使用清除浮动来实现两列布局</p>
+        </div>
+      </div>
+
+      <h1></h1>
+    </div>
+  </body>
+</html>

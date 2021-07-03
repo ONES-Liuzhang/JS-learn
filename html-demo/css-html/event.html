@@ -1,0 +1,28 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>event</title>
+  </head>
+  <body>
+    <h1>事件捕获和事件冒泡</h1>
+    <p>el.addEventListener默认为冒泡事件，传递第三个参数为true使用事件捕获</p>
+    <div id="box" style="height: 500px; background-color: beige">
+      <div id="content" style="height: 200px; background-color: bisque">
+        <button id="btn">点击我</button>
+      </div>
+    </div>
+    <script>
+      let box = document.getElementById("box");
+      let content = document.getElementById("content");
+      let btn = document.getElementById("btn");
+
+      [box, content, btn].forEach((el) => {
+        el.addEventListener("click", function () {
+          console.log(el.id, "被点击");
+        });
+      });
+    </script>
+  </body>
+</html>

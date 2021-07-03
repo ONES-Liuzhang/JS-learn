@@ -1,0 +1,90 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>拦截原生事件</title>
+  </head>
+  <body>
+    <button id="btn1">pushState</button>
+    <button id="btn2">pushState</button>
+    <button id="btn3">go(-1)</button>
+    <button id="btn4">CallCaptureEvent</button>
+    <script>
+      window.addEventListener("popstate", ({ state }) => {
+        console.log("origin trigger popstate! ", state);
+      });
+
+      const originAddEventListener = window.addEventListener;
+      const originRemoveEventListener = window.removeEventListener;
+
+      const captureEventListeners = [];
+
+      window.addEventListener = function (name, fn) {
+        if (name === "popstate") {
+          captureEventListeners.push(fn);
+          return;
+        }
+        return originAddEventListener.call(this, fn);
+      };
+
+      // 触发pushstate
+      const originPushState = window.history.pushState;
+      window.history.pushState = function () {
+        const oldUrl = window.location.href;
+        let result = originPushState.apply(this, arguments);
+        const newUrl = window.location.href;
+
+        if (oldUrl !== newUrl) {
+          // TODO 这里会触发addEventListener吗？
+          // 会
+          const popStateEvent = new PopStateEvent(
+            "popstate",
+            window.history.state
+          );
+          // const evt = document.createEvent("PopStateEvent");
+          // evt.initPopStateEvent("popstate", false, false);
+          // 手动触发popstate
+          window.dispatchEvent(popStateEvent);
+        }
+      };
+
+      function addEvent(name, fn) {
+        window.addEventListener(name, fn);
+      }
+
+      function callCaptureEventListener() {
+        while (captureEventListeners.length > 0) {
+          captureEventListeners.pop().call(this, arguments);
+        }
+      }
+
+      addEvent("popstate", () => {
+        console.log("捕获popstate1");
+      });
+
+      addEvent("popstate", () => {
+        console.log("捕获popstate2");
+      });
+    </script>
+    <script>
+      document
+        .querySelector("#btn1")
+        .addEventListener("click", () =>
+          history.pushState({ state: "btn1" }, null, "1")
+        );
+      document
+        .querySelector("#btn2")
+        .addEventListener("click", () =>
+          history.pushState({ state: "btn2" }, null, "2")
+        );
+      document
+        .querySelector("#btn3")
+        .addEventListener("click", () => history.go(-1));
+
+      document
+        .querySelector("#btn4")
+        .addEventListener("click", callCaptureEventListener);
+    </script>
+  </body>
+</html>

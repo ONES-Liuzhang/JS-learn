@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style type="text/css">
       div,
-      h2 {
+      h2,
+      ul {
         margin: 0px;
         padding: 0px;
         box-sizing: border-box;
@@ -43,8 +44,23 @@
         justify-content: center;
         align-items: center;
       }
+      .list {
+        list-style: none;
+        margin: 10px 30px;
+      }
+      .list > li {
+        background-color: cadetblue;
+        width: 200px;
+        line-height: 50px;
+        height: 50px;
+        margin-bottom: 10px;
+        text-align: center;
+        cursor: default;
+      }
     </style>
     <script src="./drag-drop.js"></script>
+    <script src="./drag-drop-list.js"></script>
+
     <title>拖拽效果</title>
   </head>
   <body>
@@ -56,21 +72,35 @@
         鼠标放开，给鼠标和鼠标放开赋值null，除非再次点击，否则不会有任何移动效果
       </li>
     </ul>
-    <div class="box">
-      <div class="content">
-        <div class="adsorbent" id="adsorbent">吸附</div>
-        <div class="drop" id="drop1">拖拽我</div>
-      </div>
+    <div class="content">
+      <div class="adsorbent" id="adsorbent">吸附</div>
+      <div class="drop" id="drop1">拖拽我</div>
+    </div>
 
-      <div class="content">
-        <div class="drop" id="drop2">拖拽我</div>
-      </div>
+    <div class="content">
+      <div class="drop" id="drop2">拖拽我</div>
+    </div>
+
+    <h2>列表拖拽</h2>
+    <ul>
+      <li>点击时创建一个空节点占位</li>
+      <li>鼠标移动时重新计算位置</li>
+    </ul>
+    <div class="content">
+      <ul class="list" id="list">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+      </ul>
     </div>
     <script type="text/javascript">
       let drop1 = new DragDrop(document.getElementById("drop1"));
       let drop2 = new DragDrop(document.getElementById("drop2"));
 
-      drop1.adsorbent(document.getElementById("adsorbent"));
+      drop1.bindAdsorbent(document.getElementById("adsorbent"));
+
+      let list = new DragDropList(document.getElementById("list"));
     </script>
   </body>
 </html>

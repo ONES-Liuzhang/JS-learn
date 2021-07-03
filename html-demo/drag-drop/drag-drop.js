@@ -1,9 +1,8 @@
 class DragDrop {
-  adsorbentEl;
-
   constructor(el) {
     const { offsetLeft, offsetTop, offsetParent } = el;
     this.el = el;
+    this.adsorbent = {};
     // 鼠标点击位置相对元素的位置
     this.relative = {};
     // 初始化元素相对父元素的位置
@@ -26,19 +25,16 @@ class DragDrop {
     // 鼠标松开，移除事件
     document.addEventListener("mouseup", () => {
       // 判断是否和吸附位置有交集
-      if (this.adsorbentEl) {
+      if (this.adsorbent.el) {
         // 暂时先判断圆形
         let r1 = el.offsetWidth / 2;
-        let r2 = el.offsetWidth / 2;
+        let r2 = this.adsorbent.r;
         let o1 = { x: el.offsetLeft + r1, y: el.offsetTop + r1 };
-        let o2 = {
-          x: this.adsorbentEl.offsetLeft + r2,
-          y: this.adsorbentEl.offsetTop + r2,
-        };
+
         // 相交
-        if (r1 + r2 > getDistance(o1, o2)) {
-          el.style.left = this.adsorbentEl.offsetLeft + (r2 - r1) / 2;
-          el.style.top = this.adsorbentEl.offsetTop + (r2 - r1) / 2;
+        if (r1 + r2 > getDistance(o1, this.adsorbent.o)) {
+          el.style.left = this.adsorbent.left + (r2 - r1) / 2;
+          el.style.top = this.adsorbent.top + (r2 - r1) / 2;
         }
       }
       // 更新当前位置
@@ -75,16 +71,19 @@ class DragDrop {
   }
 
   // 吸附某个元素
-  adsorbent(el) {
-    this.adsorbentEl = el;
+  bindAdsorbent(el) {
+    this.adsorbent.el = el;
+    let r = (this.adsorbent.r = el.offsetWidth / 2);
+    this.adsorbent.o = {
+      x: el.offsetLeft + r,
+      y: el.offsetTop + r,
+    };
+    this.adsorbent.left = el.offsetLeft;
+    this.adsorbent.top = el.offsetTop;
   }
 }
 
 // utils
 function getDistance(p1, p2) {
   return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
-}
-
-class DragDropList {
-  constructor() {}
 }
