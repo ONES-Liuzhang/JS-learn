@@ -25,7 +25,7 @@ export default class Compiler {
     });
   }
 
-  /** 编译文本节点 */
+  /** 编译文本节点, {{}}通过双大括号绑定 */
   compileText(el) {
     const textContent = el.textContent;
     const reg = /\{\{(.+?)\}\}/;
@@ -56,11 +56,56 @@ export default class Compiler {
     updateFn && updateFn.call(this, vm, el, directive);
   }
 
-  textUpdater(vm, el, directive) {}
+  /** 解析v-text */
+  textUpdater(vm, el, directive) {
+    const attr = "v-" + directive;
+    const key = el.getAttribute(attr);
 
-  htmlUpdater(vm, el, directive) {}
+    new Watcher(vm, key, (newVal) => {
+      el.innerHTML = newVal;
+    });
+  }
 
-  clickUpdater(vm, el, directive) {}
+  /** 解析v-html */
+  htmlUpdater(vm, el, directive) {
+    const attr = "v-" + directive;
+    const key = el.getAttribute(attr);
+    new Watcher(vm, key, (newVal) => {
+      if (newVal) {
+        newVal = newVal.replace(/\</g, "\\<").replace(/\>/, "\\>");
+      }
+      el.innerHTML = newVal;
+    });
+  }
+
+  /** 解析v-on */
+  clickUpdater(vm, el, directive) {
+    const attr = "v-on:" + directive;
+    const fnName = el.getAttribute(attr);
+
+    el.addEventListener("click", this.methods[fnName].bind(vm));
+  }
+
+  /** 解析v-model */
+  modelUpdater(vm, el, directive) {
+    const attr = "v-" + directive;
+    const key = el.getAttribute(attr);
+
+    switch (el.tagName.toUpperCase()) {
+      case "DIV":
+        el.innerHTML = vm[key];
+        break;
+      case "INPUT":
+        el.addEventListener("input", (e) => {
+          vm[key] = e.currentTarget.value;
+        });
+        break;
+    }
+
+    new Watcher(vm, key, (newVal) => {
+      el.value = newVal;
+    });
+  }
 
   getDirective(attrName) {
     return attrName.indexOf(":") > -1 ? attrName.substr(5) : attrName.substr(2);

@@ -59,7 +59,11 @@ class SelfPromise {
       ? onFulfilled
       : (value) => value;
 
-    let realOnRejected = isFunction(onRejected) ? onRejected : (value) => value;
+    let realOnRejected = isFunction(onRejected)
+      ? onRejected
+      : (reason) => {
+          throw reason;
+        };
 
     let promise2 = new SelfPromise((resolve, reject) => {
       const fulfilledFn = () => {
@@ -76,7 +80,7 @@ class SelfPromise {
       const rejectedFn = () => {
         queueMicrotask(() => {
           try {
-            let x = realOnRejected(this.value);
+            let x = realOnRejected(this.reason);
             this.resolvePromise(promise2, x, resolve, reject);
           } catch (e) {
             reject(e);
@@ -114,7 +118,10 @@ class SelfPromise {
     }
 
     if (x instanceof SelfPromise) {
-      x.then(resolve, reject);
+      // 如果返回一个Promise，则继续开启一个微任务
+      queueMicrotask(() => {
+        x.then(resolve, reject);
+      });
     } else if (typeof x === "object" || isFunction(x)) {
       if (x == null) return resolve();
 
@@ -173,20 +180,52 @@ class SelfPromise {
     });
   }
 
+  static all(promises) {
+    return new SelfPromise((resolve, reject) => {
+      const result = [];
+      let counter = 0;
+
+      promises.forEach((p, index) => {
+        SelfPromise.resolve(p).then(
+          (value) => {
+            counter++;
+            result[index] = value;
+            if (counter === promises.length) {
+              resolve(result);
+            }
+          },
+          (reason) => {
+            reject(reason);
+          }
+        );
+      });
+    });
+  }
+
   static resolve(value) {
     return new SelfPromise((resolve) => {
       resolve(value);
     });
   }
 
+  static reject(reason) {
+    return new SelfPromise((_, reject) => {
+      reject(reason);
+    });
+  }
+
   catch(onRejected) {
     return this.then(null, onRejected);
   }
+
+  // finally
+  // 1. 不管Promise最后是rejected还是resolved都会执行
+  // 2. 回调函数不接收任何参数
+  // 3. 默认返回上一次的promise值，如果抛出异常，则返回一个异常的promise
 }
 
 function isFunction(value) {
   return typeof value === "function";
 }
 
-//
-new SelfPromise();
+module.exports = SelfPromise;
