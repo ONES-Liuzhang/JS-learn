@@ -1,0 +1,64 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>event</title>
+  </head>
+  <body>
+    <h1>事件捕获和事件冒泡</h1>
+    <p>el.addEventListener默认为冒泡事件，传递第三个参数为true使用事件捕获</p>
+    <p>e.target: 触发事件的元素</p>
+    <p>e.currentTarget: 绑定事件的元素</p>
+    <div id="box" style="height: 500px; background-color: beige">
+      <p id="content" style="height: 200px; background-color: bisque">
+        <a id="btn" href="http://www.baidu.com" target="_blank">点我啊</button>
+      </p>
+    </div>
+    <script>
+      let box = document.getElementById("box");
+      let content = document.getElementById("content");
+      let btn = document.getElementById("btn");
+
+      // 父元素阻止事件捕获
+      box.addEventListener('click', (ev) => {
+        console.log('box被点击')
+        // ev.stopPropagation() 
+        ev.stopImmediatePropagation()
+      }, true)
+
+      // 如果不为a标签调用preventDefault，还是会触发href的默认行为
+      // Q：为什么父元素在捕获阶段阻止事件传播无法阻止a标签的href默认行为
+      // btn.addEventListener('click', (ev) => {
+      //   ev.preventDefault()
+      // });
+
+      [box, content, btn].forEach((el) => {
+        el.addEventListener(
+          "click",
+          function (e) {
+            console.log(
+              "捕获阶段 e.target:",
+              e.target.tagName,
+              " e.currentTarget:",
+              e.currentTarget.tagName
+            );
+          },
+          true
+        );
+        el.addEventListener(
+          "click",
+          function (e) {
+            console.log(
+              "冒泡阶段 e.target:",
+              e.target.tagName,
+              " e.currentTarget",
+              e.currentTarget.tagName
+            );
+          },
+          false
+        );
+      });
+    </script>
+  </body>
+</html>
