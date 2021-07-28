@@ -1,0 +1,63 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>5.圣杯布局</title>
+    <style>
+      .container {
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        height: 100%;
+        width: 100%;
+      }
+      header {
+        background-color: bisque;
+      }
+
+      .nav {
+        list-style: none;
+        display: flex;
+        justify-content: space-around;
+      }
+
+      footer {
+        height: 200px;
+        background-color: aqua;
+      }
+
+      main {
+        display: flex;
+      }
+
+      .left {
+        width: 200px;
+        background-color: coral;
+      }
+
+      .right {
+        width: 200px;
+        background-color: coral;
+      }
+
+      .center {
+        flex: 1;
+        min-width: 300px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <ul class="nav">
+          <li>Home</li>
+          <li>About</li>
+        </ul>
+      </header>
+      <main>
+        <div class="left">left</div>
+        <div class="center">center</div>
+        <div class="right">right</div>
+      </main>
+      <footer>Footer</footer>
+    </div>
+  </body>
+</html>

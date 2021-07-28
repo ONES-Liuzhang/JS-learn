@@ -1,0 +1,32 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>3.两栏式布局</title>
+    <style>
+      .container {
+        height: 100%;
+        right: 100%;
+        background-color: beige;
+      }
+      .left {
+        width: 300px;
+        float: left;
+        background-color: aquamarine;
+        height: 100%;
+      }
+
+      .right {
+        /* 创建BFC */
+        display: flow-root;
+        height: 100%;
+        background-color: antiquewhite;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="left"></div>
+      <div class="right"></div>
+    </div>
+  </body>
+</html>

@@ -40,7 +40,6 @@ quickSort([3, 2, 1, 5, 2, 21, 0, 4, 92, 3]);
 // 时间复杂度O(nlogn) 空间复杂度 O(1)
 function quickSort2(array) {
   sort(0, array.length - 1);
-  console.log(array);
 
   function sort(i, j) {
     // 终止条件
