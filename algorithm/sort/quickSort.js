@@ -1,73 +1,41 @@
-// 快速排序
-function quickSort(candidates) {
-  let len = candidates.length;
-  // 左闭右开
-  run(0, len - 1);
-  console.log(candidates);
-  return candidates;
+/**
+ * 快速排序
+ * 思路：基于“分治”法
+ * 1. 选择一个“基准值”，每次循环都把数组分为两部分 [小数组, 基准值, 大数组]
+ * 2. 对小数组和大数组进行同样的操作，最终获得一个有序数组
+ * 和归并排序的区别在于，快排直接在原数组上进行操作
+ * 时间复杂度O(nlogn)
+ */
+// 以数组第一个数为基准值
+function quickSort(nums) {
+  sortIn(0, nums.length - 1);
 
-  function run(i, j) {
-    let flag = candidates[i];
-    let k;
-    let start = i,
-      end = j;
+  return nums;
+  function sortIn(i, j) {
+    // 边界条件
     if (i >= j) return;
+
+    // 基准值
+    const start = i;
+    const end = j;
+    let base = nums[start];
     while (i < j) {
-      while (i < j && candidates[j] >= flag) j--;
-      while (i < j && candidates[i] <= flag) i++;
-      if (i < j) {
-        exchange(i, j);
+      while (i < j && nums[j] > base) j--;
+      while (i < j && nums[i] <= base) i++;
+      if (i === j) {
+        break;
+      } else {
+        [nums[i], nums[j]] = [nums[j], nums[i]];
       }
     }
-    k = j;
-    exchange(k, start);
-    // left
-    run(start, k - 1);
-    // right
-    run(k + 1, end);
-  }
 
-  function exchange(m, n) {
-    if (m === n) return;
-    let tmp = candidates[m];
-    candidates[m] = candidates[n];
-    candidates[n] = tmp;
+    [nums[i], nums[start]] = [nums[start], nums[i]];
+
+    // 左数组递归排序
+    sortIn(start, i - 1);
+    // 右数组递归排序
+    sortIn(i + 1, end);
   }
 }
 
-quickSort([3, 2, 1, 5, 2, 21, 0, 4, 92, 3]);
-
-// 时间复杂度O(nlogn) 空间复杂度 O(1)
-function quickSort2(array) {
-  sort(0, array.length - 1);
-
-  function sort(i, j) {
-    // 终止条件
-    if (i >= j) return;
-    let flag = array[i];
-    // 双指针
-    let left = i,
-      right = j;
-    while (left < right) {
-      // 先走右指针再走左指针
-      while (array[right] >= flag && left < right) right--;
-      while (array[left] <= flag && left < right) left++;
-      if (left < right) exchange(left, right);
-    }
-
-    exchange(i, right);
-    // 左侧排序
-    sort(i, right - 1);
-    // 右侧排序
-    sort(right + 1, j);
-  }
-
-  // 交换i 和 j的值
-  function exchange(i, j) {
-    let temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-  }
-}
-
-quickSort2([3, 2, 1, 5, 2, 21, 0, 4, 92, 3]);
+console.log(quickSort([2, 2, 1, 1, -1, 8, 3, 5, 2]));
