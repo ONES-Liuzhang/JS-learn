@@ -1,0 +1,11 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "cbbfcd",
+  "license": "MIT",
+  "scripts": {
+    "build": "dd",
+    "clean": "dd clean"
+  }
+}

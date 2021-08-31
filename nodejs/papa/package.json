@@ -1,0 +1,22 @@
+{
+  "name": "papa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "lz-pa": "index.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "cli-progress": "^3.9.0",
+    "commander": "^8.1.0",
+    "inquirer": "^8.1.2",
+    "superagent": "^6.1.0",
+    "superagent-proxy": "^2.1.0"
+  }
+}
