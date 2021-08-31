@@ -18,8 +18,6 @@ const header_default = {
     '"Chromium";v="92", " Not A;Brand";v="99", "Google Chrome";v="92"',
 };
 
-start("沙雕猫咪表情");
-
 async function start(word) {
   const imgList = [];
 

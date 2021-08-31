@@ -21,7 +21,8 @@
     "babel": "^6.23.0",
     "eventemitter3": "^4.0.7",
     "express": "^4.17.1",
-    "ioredis": "^4.27.8"
+    "ioredis": "^4.27.8",
+    "vue": "2"
   },
   "repository": {
     "type": "git",
