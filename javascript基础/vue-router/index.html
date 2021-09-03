@@ -1,0 +1,37 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Router</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue/2.6.9/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vue-router/3.5.2/vue-router.js"></script>
+</head>
+<body>
+    <div id="root">
+        <div>{{ message }}</div>
+        <router-view></router-view>
+    </div>
+    <script>
+        const foo = {template: `<div>foo</div>`}
+        const bar = {template: `<div>bar</div>`}
+
+        const routes = [{
+            path: "/foo",
+            component: () => foo
+        }, 
+        {
+            path: "/foo/bar",
+            component: bar
+        }]
+        Vue.use(VueRouter)
+        const router = new VueRouter({routes})
+
+        new Vue({
+            data: {
+                message: "Hello World"
+            },
+            router,
+            el: document.querySelector("#root")
+        })
+    </script>
+</body>
+</html>
