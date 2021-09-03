@@ -1,0 +1,22 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>myVue</title>
+  </head>
+  <body>
+    <div id="app">
+      <h2>模板语法 {{}} 和v-model</h2>
+      <div>{{ msg }}</div>
+      <div v-text="desc"></div>
+      <div v-html="desc"></div>
+      <br />
+
+      <h2>v-model</h2>
+      <input v-model="msg" />
+      <button v-on:click="heightUp">点我</button>
+    </div>
+    <script src="index.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "zhuawa-cli",
+  "version": "1.0.0",
+  "description": "",
+  "bin": {
+    "cli": "./index.js"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^5.1.0",
+    "inquirer": "^7.1.0"
+  }
+}
