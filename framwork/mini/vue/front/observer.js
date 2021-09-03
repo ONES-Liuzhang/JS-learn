@@ -11,6 +11,7 @@ function observe(obj) {
   if (typeof obj !== "object" || obj === null) return obj;
 
   if (Array.isArray(obj)) {
+    // 劫持数组方法
   } else {
     Object.keys(obj).forEach((key) => {
       defineReactive(obj, key, obj[key]);
@@ -36,6 +37,7 @@ function defineReactive(obj, key, val) {
     },
     set(newVal) {
       if (value === newVal) return;
+      observe(newVal);
       value = newVal;
       // 触发所有绑定在当前属性的watcher
       dep.notify();

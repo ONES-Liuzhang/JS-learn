@@ -12,7 +12,7 @@ class Module {
     this.state = typeof rawState === "function" ? rawState() : rawState;
   }
 
-  // TODO 是否使用命名空间 有啥用❓
+  // 使用命名空间后，调用mutations的 name值为namespace/key
   get namespaced() {
     return !!this._rawModule.namespaced;
   }

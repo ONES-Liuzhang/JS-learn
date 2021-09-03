@@ -8,6 +8,8 @@
   },
   "dependencies": {
     "commander": "^8.1.0",
-    "inquirer": "^8.1.2"
+    "empty": "file:test",
+    "inquirer": "^8.1.2",
+    "promisify-child-process": "^4.1.1"
   }
 }
