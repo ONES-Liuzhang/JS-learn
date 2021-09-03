@@ -1,0 +1,54 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js"
+      integrity="sha512-pSyYzOKCLD2xoGM1GwkeHbdXgMRVsSqQaaUoHskx/HF09POwvow2VfVEdARIYwdeFLbu+2FCOTRYuiyeGxXkEg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app"></div>
+
+    <script type="module">
+      import VueRouter from "../index.js";
+
+      Vue.use(VueRouter);
+
+      const Foo = {
+        name: "Foo",
+        template: `<p>Foo</p>`,
+      };
+      const Bar = {
+        name: "Bar",
+        template: `<p>Bar</p>`,
+      };
+
+      const App = {
+        name: "App",
+        components: { Foo, Bar },
+        template: `
+          <div>
+            <Foo></Foo>
+            <Bar></Bar>
+          </div>
+        `,
+      };
+
+      const routes = [
+        {
+          foo: Foo,
+          Bar: Bar,
+        },
+      ];
+
+      new Vue({
+        render: (h) => h(App),
+      }).$mount("#app");
+    </script>
+  </body>
+</html>
