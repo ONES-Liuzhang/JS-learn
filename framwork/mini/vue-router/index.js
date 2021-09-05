@@ -42,6 +42,16 @@ class VueRouter {
   match(raw) {
     return this.matcher.match(raw);
   }
+
+  push(route, onComplate, onAbort) {
+    if (!onComplate && !onAbort && typeof Promise !== "undefined") {
+      return new Promise((resolve, reject) => {
+        this.history.push(route, resolve, reject);
+      });
+    } else {
+      this.history.push(route, onComplate, onAbort);
+    }
+  }
 }
 
 VueRouter.install = install;

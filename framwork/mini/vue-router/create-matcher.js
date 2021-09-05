@@ -57,6 +57,7 @@
  * pathList:
  */
 import { createRouteMap } from "./create-route-map.js";
+import { createRoute, matchRoute } from "./route.js";
 
 // 储存路由配置
 export function createMatcher(routes, router) {
@@ -77,28 +78,6 @@ export function createMatcher(routes, router) {
   }
 
   return { match };
-}
-
-function createRoute(record, location) {
-  const route = {
-    path: location.path || "/",
-    query: location.query || {},
-    hash: location.hash || "",
-    // fullPath:
-    matched: [],
-  };
-
-  while (record) {
-    route.matched.unshift(record);
-    record = record.parent;
-  }
-
-  // 不允许外部修改route
-  return Object.freeze(route);
-}
-
-function matchRoute(regex, path) {
-  return regex.match(path);
 }
 
 /**

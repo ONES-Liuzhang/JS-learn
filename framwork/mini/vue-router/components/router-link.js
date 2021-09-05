@@ -9,8 +9,9 @@ export default {
   computed: {
     href() {
       // TODO:: to没有使用path 而是使用name，要match name
-      const path = typeof this.to === "string" ? this.to : this.to.path;
-      return this.$router.mode === "hash" ? `#/${path}` : path;
+      let path = typeof this.to === "string" ? this.to : this.to.path;
+      path = this.$router.mode === "hash" ? `#/${path}` : path;
+      return path.replace(/\/\//g, "/");
     },
   },
   render(h) {
