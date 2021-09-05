@@ -1,0 +1,17 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>History</title>
+  </head>
+  <body>
+    <script>
+      window.addEventListener("popstate", (e) => {
+        console.log(
+          `当前出栈页面为${window.location.href},state:${JSON.stringify(
+            e.state
+          )}`
+        );
+      });
+    </script>
+  </body>
+</html>

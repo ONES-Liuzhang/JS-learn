@@ -3,12 +3,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js"
-      integrity="sha512-pSyYzOKCLD2xoGM1GwkeHbdXgMRVsSqQaaUoHskx/HF09POwvow2VfVEdARIYwdeFLbu+2FCOTRYuiyeGxXkEg=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.js"></script>
     <title>Document</title>
   </head>
   <body>
@@ -33,21 +28,30 @@
         components: { Foo, Bar },
         template: `
           <div>
-            <Foo></Foo>
-            <Bar></Bar>
+            <h1>App</h1>
+            <router-link to="/foo">Foo</router-link>
+            <router-link to="/bar">Bar</router-link>
+            <router-view></router-view>
           </div>
         `,
       };
 
       const routes = [
         {
-          foo: Foo,
-          Bar: Bar,
+          path: "/foo",
+          component: Foo,
+        },
+        {
+          path: "/bar",
+          components: { default: Bar },
         },
       ];
 
+      const router = new VueRouter({ routes });
+
       new Vue({
         render: (h) => h(App),
+        router,
       }).$mount("#app");
     </script>
   </body>
