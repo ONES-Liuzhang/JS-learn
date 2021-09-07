@@ -26,16 +26,76 @@ export class HashHistory extends BaseHistory {
     super(router);
   }
 
-  // 注册监听事件 TODO: 延迟执行
-  setupListeners() {}
+  /** 注册监听事件 TODO: 为什么要延迟执行
+   *
+   * 当用户直接改变浏览器的location时
+   * 当用户点击浏览器的前进后退按钮时
+   */
+  setupListeners() {
+    if (this.listeners.length > 0) {
+      return;
+    }
 
-  /** 暴露出的 push 方法 */
+    // 监听到路由改变之后 要进行跳转
+    const handleRoutingEvent = () => {
+      console.log("触发Vue-router 路由跳转");
+      this.transitionTo(getHash(), (route) => {
+        console.log(
+          `setupListeners - transitionTo 跳转完成，${JSON.stringify(route)}`
+        );
+      });
+    };
+
+    window.addEventListener("popstate", handleRoutingEvent);
+
+    // 要保存摧毁监听的函数，当Vue实例销毁的时候移除监听，释放内存
+    return () => {
+      this.listeners.push(() => {
+        window.removeEventListener("popstate", handleRoutingEvent);
+      });
+    };
+  }
+
+  /** 改变location值 */
+  ensureURL() {
+    const current = this.current.fullPath;
+    if (getHash() !== current) {
+      pushHash();
+    }
+  }
+
   push(location, onComplate, onAbort) {
     this.transitionTo(location, (route) => {
       pushHash(route.fullPath);
       onComplate && onComplate(route);
     });
   }
+
+  go(num) {
+    window.history.go(num);
+  }
 }
 
-function pushHash(path) {}
+function getHash() {
+  let href = window.location.href;
+
+  let index = href.indexOf("#");
+  if (index < 0) return "/";
+
+  href = href.slice(index + 1);
+
+  return href;
+}
+
+/** index.html不在服务器根路径时 要拼接路径 */
+function getUrl(path) {
+  let href = window.location.href;
+  const hashIndex = href.indexOf("#");
+  const base = href.slice(0, hashIndex);
+
+  return `${base}#${path}`;
+}
+
+function pushHash(path) {
+  window.history.pushState(getUrl(path));
+}

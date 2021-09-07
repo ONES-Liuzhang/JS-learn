@@ -91,7 +91,7 @@ function normalizeLocation(raw, currentRoute) {
   if (next._normalized) return next;
 
   const basePath = currentRoute.path || "/";
-  const parsedPath = parsePath(raw.path);
+  const parsedPath = parsePath(next.path);
 
   // 支持相对路径
   const path = resolvePath(parsedPath.path, basePath);
@@ -101,8 +101,8 @@ function normalizeLocation(raw, currentRoute) {
   return {
     _normalized,
     path,
-    query,
-    hash,
+    query: parsedPath.query,
+    hash: parsedPath.hash,
   };
 }
 

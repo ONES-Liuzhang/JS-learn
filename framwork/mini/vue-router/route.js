@@ -17,7 +17,7 @@ export function createRoute(record, location) {
 }
 
 export function matchRoute(regex, path) {
-  return regex.match(path);
+  return path.match(regex);
 }
 
 // TODO: 处理query
