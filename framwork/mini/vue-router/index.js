@@ -44,6 +44,9 @@ class VueRouter {
 
     this.app = app;
 
+    // 页面刷新的时候要保证一次跳转
+    this.history.transitionTo(this.history.getCurrentLocation());
+
     this.history.setupListeners();
   }
 

@@ -60,7 +60,7 @@ export class HashHistory extends BaseHistory {
   ensureURL() {
     const current = this.current.fullPath;
     if (getHash() !== current) {
-      pushHash();
+      pushHash(current);
     }
   }
 
@@ -73,6 +73,10 @@ export class HashHistory extends BaseHistory {
 
   go(num) {
     window.history.go(num);
+  }
+
+  getCurrentLocation() {
+    return getHash();
   }
 }
 
