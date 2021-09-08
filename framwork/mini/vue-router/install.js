@@ -14,7 +14,9 @@ export function install(Vue) {
       if (this.$options.router) {
         this._rooterRoot = this;
         this._router = this.$options.router;
-        this._route = {};
+
+        this._router.init(this);
+        this._route = this._router.currentRoute;
       } else {
         this._rooterRoot = this.$parent ? this.$parent._rooterRoot : this;
       }

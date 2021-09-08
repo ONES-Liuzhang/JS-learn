@@ -34,13 +34,33 @@ class VueRouter {
     }
   }
 
+  // 挂载监听事件、并把卸载事件挂载到组件生命周期中去
+  init(app) {
+    if (this.app) return;
+
+    app.$once("hood:destroyed", () => {
+      this.history.teardown();
+    });
+
+    this.app = app;
+
+    // 页面刷新的时候要保证一次跳转
+    this.history.transitionTo(this.history.getCurrentLocation());
+
+    this.history.setupListeners();
+  }
+
+  get currentRoute() {
+    return this.history && this.history.current;
+  }
+
   /**
    *
    * @param {*} raw
    * @returns route
    */
   match(raw) {
-    return this.matcher.match(raw);
+    return this.matcher.match(raw, this.currentRoute);
   }
 
   push(route, onComplate, onAbort) {
