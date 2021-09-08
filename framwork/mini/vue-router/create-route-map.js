@@ -23,7 +23,7 @@ function addRouteRecord(pathMap, pathList, route, parent) {
   };
   if (route.children) {
     route.children.forEach((child) => {
-      addRouteRecord(pathMap, pathList, child, route);
+      addRouteRecord(pathMap, pathList, child, record);
     });
   }
   if (!pathMap[record.path]) {
@@ -36,5 +36,5 @@ function normalizePath(path, parent, strict) {
   if (!strict) path = path.replace(/\/$/, "");
   if (path[0] === "/") return path;
   if (parent == null) return path;
-  return `${parent}/${path}`.replace(/\/\//g, "");
+  return `${parent.path}/${path}`.replace(/\/\//g, "");
 }

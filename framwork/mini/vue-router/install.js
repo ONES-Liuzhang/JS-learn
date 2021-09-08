@@ -16,7 +16,7 @@ export function install(Vue) {
         this._router = this.$options.router;
 
         this._router.init(this);
-        this._route = this._router.currentRoute;
+        Vue.util.defineReactive(this, "_route", this._router.history.current);
       } else {
         this._rooterRoot = this.$parent ? this.$parent._rooterRoot : this;
       }

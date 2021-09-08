@@ -40,6 +40,8 @@ export class HashHistory extends BaseHistory {
     const handleRoutingEvent = () => {
       console.log("触发Vue-router 路由跳转");
       this.transitionTo(getHash(), (route) => {
+        // 触发route改变事件
+        this.cb(route);
         console.log(
           `setupListeners - transitionTo 跳转完成，${JSON.stringify(route)}`
         );
@@ -77,6 +79,10 @@ export class HashHistory extends BaseHistory {
 
   getCurrentLocation() {
     return getHash();
+  }
+
+  listen(cb) {
+    this.cb = cb;
   }
 }
 

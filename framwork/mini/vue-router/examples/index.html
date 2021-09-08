@@ -16,11 +16,19 @@
 
       const Foo = {
         name: "Foo",
-        template: `<p>Foo</p>`,
+        template: `
+        <div>
+          <p>foo</p>
+          <router-view></router-view>
+        </div>`,
       };
       const Bar = {
         name: "Bar",
         template: `<p>Bar</p>`,
+      };
+      const Zzz = {
+        name: "Zzz",
+        template: `<p>Zzz</p>`,
       };
 
       const App = {
@@ -30,6 +38,7 @@
           <div>
             <h1>App</h1>
             <router-link to="/foo">Foo</router-link>
+            <router-link to="/foo/zzz">Zzz</router-link>
             <router-link to="/bar">Bar</router-link>
             <router-view></router-view>
           </div>
@@ -40,6 +49,12 @@
         {
           path: "/foo",
           component: Foo,
+          children: [
+            {
+              path: "zzz",
+              component: Zzz,
+            },
+          ],
         },
         {
           path: "/bar",

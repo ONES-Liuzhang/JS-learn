@@ -47,7 +47,12 @@ class VueRouter {
     // 页面刷新的时候要保证一次跳转
     this.history.transitionTo(this.history.getCurrentLocation());
 
+    // 注册popstate事件 监听浏览器location的变化
     this.history.setupListeners();
+
+    this.history.listen((route) => {
+      app._route = route;
+    });
   }
 
   get currentRoute() {
