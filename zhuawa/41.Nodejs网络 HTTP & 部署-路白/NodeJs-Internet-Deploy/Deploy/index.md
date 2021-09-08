@@ -75,6 +75,11 @@ AuthorizedKeysFile .ssh/authorized_keys
 
 HOST=lubai
 
+# -a 递归复制、如果目标地址没有文件夹会创建一个
+# -v 把结果输出到终端
+# -z 压缩
+# -p 显示progress
+# -e 表示指定以ssh协议传输
 rsync -avzp -e "ssh" ./Internet/ $HOST:/root/app
 ssh $HOST "pm2 restart /root/app/http-server.js"
 
