@@ -47,23 +47,20 @@ class Vue {
   // Computed是原本不存在于vm instance上的值
   initComputed() {
     const watchers = [];
-    const computed = this.$options.computed;
+    const vm = this;
+    const computed = vm.$options.computed;
     const computedOptions = { lazy: true };
     for (key in computed) {
       let userDef = computed[key];
-      watchers[key] = new Watcher(this, userDef, noop, computedOptions);
 
-      Object.defineProperty(this, key, {
+      // 和渲染watcher不同，使用dirty标记，Computed Watcher初始化的时候不会收集computed的依赖
+      watchers[key] = new Watcher(vm, userDef, noop, computedOptions);
+
+      Object.defineProperty(vm, key, {
         enumerable: true,
         configurable: true,
         get() {
-          if (watchers[key].dirty) {
-            // 调用computed定义的函数，并把这个watcher收集到computed函数中的响应式对象里去
-            // 当响应式对象发生改变时，会触发update，把dirty置为true，下次调用computed时，它的值会更新
-            // 所以说computed是有缓存的
-            watchers[key].evaluate();
-          }
-          return watchers[key].value;
+          return userDef.call(vm);
         },
         set: noop,
       });
