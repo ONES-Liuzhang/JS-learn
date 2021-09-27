@@ -1,0 +1,46 @@
+<html lang="en">
+  <head>
+    <title>全屏布局</title>
+    <link rel="stylesheet" href="../reset.css" />
+    <style>
+      .full-screen-layout {
+      	position: relative;
+      	width: 400px;
+      	height: 400px;
+      }
+
+      header,
+      main,
+      footer {
+      	position: absolute;
+      	left: 0;
+      	right: 0;
+      }
+
+      header {
+      	top: 0;
+      	height: 50px;
+      	background-color: #f66;
+      }
+
+      main {
+      	top: 50px;
+      	bottom: 50px;
+      	background-color: #3cf;
+      }
+
+      footer {
+      	bottom: 0;
+      	height: 50px;
+      	background-color: #66f;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="full-screen-layout" title="全屏布局">
+      <header></header>
+      <main></main>
+      <footer></footer>
+    </div>
+  </body>
+</html>

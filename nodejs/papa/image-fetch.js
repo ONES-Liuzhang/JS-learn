@@ -1,4 +1,3 @@
-const superagent = require("superagent");
 const cliProgress = require("cli-progress");
 const fs = require("fs");
 const path = require("path");

@@ -1,0 +1,34 @@
+<html lang="en">
+  <head>
+    <title>水平垂直居中布局</title>
+    <link rel="stylesheet" href="../reset.css" />
+    <style>
+      .center-layout {
+        position: relative;
+        width: 400px;
+        height: 400px;
+        background-color: #f66;
+      }
+
+      .outer {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #66f;
+      }
+
+      .inner {
+        width: 100px;
+        height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center-layout">
+      <div class="outer">
+        <div class="inner"></div>
+      </div>
+    </div>
+  </body>
+</html>

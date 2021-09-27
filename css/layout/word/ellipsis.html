@@ -1,0 +1,41 @@
+<html lang="en">
+  <head>
+    <title>文字溢出</title>
+    <style>
+      .text-ellipsis {
+        width: 200px;
+      }
+
+      .text-ellipsis > p {
+        padding: 0 10px;
+        line-height: 40px;
+        /* 两边对齐，对最后一行无效 */
+        text-align: justify;
+        font-size: 20px;
+        color: #fff;
+      }
+
+      p.s-line {
+        background-color: #f66;
+      }
+
+      p.m-line {
+        background-color: #66f;
+      }
+
+      .s-ellipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="text-ellipsis">
+      <p class="s-line s-ellipsis">XXXXXXXXXXXXXXXXX</p>
+      <p class="m-line m-ellipsis">
+        多行文字溢出多行文字溢出多行文字溢出多行文字溢出多行文字溢出多行文字溢出多行文字溢出多行文字溢出多行文字溢出多行文字溢出多行文字溢出多行文字溢出
+      </p>
+    </div>
+  </body>
+</html>

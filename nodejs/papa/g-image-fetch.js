@@ -1,7 +1,7 @@
 // google图片
 const fs = require("fs");
 const path = require("path");
-const { request, mkdir, downloadImageWithTimeout } = require("./common");
+const { request, mkdir } = require("./common");
 const cheerio = require("cheerio");
 const cliProgress = require("cli-progress");
 
