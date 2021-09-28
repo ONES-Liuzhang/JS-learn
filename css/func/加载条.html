@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+  <title>加载条</title>
+  <style>
+    .strip-loading {
+    	display: flex;
+    	width: 200px;
+    	height: 200px;
+    }
+
+    ul > li {
+      list-style: none;
+    	margin-left: 5px;
+    	border-radius: 3px;
+    	width: 6px;
+    	height: 30px;
+    	background-color: #f66;
+    	animation: beat 1s ease-in-out infinite;
+    	animation-delay: var(--time);
+
+    	--time: calc((var(--line-index) - 1) * 200ms);
+    }
+
+    @keyframes beat {
+    	0%,
+    	100% {
+    		transform: scaleY(1);
+    	}
+
+    	50% {
+    		transform: scaleY(.5);
+    	}
+    }
+  </style>
+</head>
+<body>
+  <ul class="strip-loading">
+    <li style="--line-index: 1"></li>
+    <li style="--line-index: 2"></li>
+    <li style="--line-index: 3"></li>
+    <li style="--line-index: 4"></li>
+    <li style="--line-index: 5"></li>
+    <li style="--line-index: 6"></li>
+  </div>
+</body>
+</html>

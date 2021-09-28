@@ -1,0 +1,85 @@
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="../reset.css" />
+    <title>加载条</title>
+    <style>
+      .flex-ct-x {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .track-btn {
+        position: relative;
+        overflow: hidden;
+        border-radius: 25px;
+        width: 400px;
+        height: 50px;
+        background-color: #66f;
+        cursor: pointer;
+        line-height: 50px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 18px;
+        color: #fff;
+      }
+
+      .track-btn > span {
+        position: relative;
+        pointer-events: none;
+      }
+
+      .track-btn::before {
+        position: absolute;
+        left: var(--x);
+        top: var(--y);
+        width: var(--size);
+        height: var(--size);
+        background-image: radial-gradient(
+          circle closest-side,
+          #09f,
+          transparent
+        );
+        content: "";
+        /* 居中 */
+        transform: translate3d(-50%, -50%, 0);
+        /* 定义动画 */
+        transition: width 200ms ease, height 200ms ease;
+
+        --size: 0;
+      }
+
+      .track-btn:hover::before {
+        --size: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="flex-ct-x">
+      <a class="track-btn">
+        <span>妙用CSS变量，让你的CSS变得更心动</span>
+      </a>
+    </div>
+  </body>
+  <script>
+    const btn = document.querySelector(".track-btn");
+    const btnStyle = btn.style;
+
+    function mouseMove(ev) {
+      const target = ev.target;
+      const x = ev.pageX - target.offsetLeft;
+      const y = ev.pageY - target.offsetTop;
+      btnStyle.setProperty("--x", `${x}px`);
+      btnStyle.setProperty("--y", `${y}px`);
+    }
+
+    btn.addEventListener("mouseenter", function () {
+      btn.addEventListener("mousemove", mouseMove);
+    });
+
+    btn.addEventListener("mouseleave", function () {
+      btn.removeEventListener("mousemove", mouseMove);
+    });
+  </script>
+</html>
