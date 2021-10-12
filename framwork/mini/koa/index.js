@@ -1,0 +1,3 @@
+class Koa {
+  constructor() {}
+}
