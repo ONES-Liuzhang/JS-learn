@@ -28,6 +28,8 @@ function getCodeFromGit(url, dirname) {
 
       if (execWithCwd(`cd ${absDir} && npm i`).status === 0)
         console.log("成功安装依赖！");
+      // TODO:: 执行Cypress test
+      execWithCwd(`cy2 `);
     } else {
       console.log(`拉取代码失败，错误码 ${result.status}`);
     }
