@@ -2,31 +2,38 @@
   <head>
     <title>Test</title>
     <style>
-      ul {
-        list-style: none;
+      .container {
+      }
+      .test {
+        margin: auto;
+        width: 100px;
+        height: 60px;
+        background-color: #f66;
+        position: relative;
+      }
+      .circle1,
+      .circle2 {
+        width: 500px;
+        height: 500px;
+        border-radius: 50%;
+        background-color: #66f;
+        position: absolute;
+      }
+
+      .circle1 {
+        top: -60px;
+        left: 20px;
+      }
+      .circle2 {
       }
     </style>
   </head>
   <body>
-    <div>
-      <ul>
-        <li>
-          <p>A</p>
-          <ul>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-          </ul>
-        </li>
-        <li>
-          <p>A</p>
-          <ul>
-            <li>aaa</li>
-            <li>aaa</li>
-            <li>aaa</li>
-          </ul>
-        </li>
-      </ul>
+    <div class="container">
+      <div class="test">
+        <div class="circle1"></div>
+        <div class="circle2"></div>
+      </div>
     </div>
   </body>
 </html>

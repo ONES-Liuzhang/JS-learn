@@ -3,11 +3,11 @@ import { BaseHistory } from "./base.js";
 /**
  * 基础知识
  * 1. 当路由是 http://xxx/#/abc 带有#的时候 location.hash 会返回 #/abc
- * 2. 改变 #/ 后的路径，不会发送新请求
+ * 2. 改变 # 后的路径，不会发送新请求
  * 3. 路由哈希值变化时会触发hashChange事件
  * 4. 调用window.history.pushState() 进行hash改变时不会触发 hashChange事件
  *
- * 要搞清楚popstate 和 hashChange 事件的触发时机
+ * 要搞清楚 popstate 和 hashChange 事件的触发时机
  *
  * 跳转方式
  * 1. location.href = "xxx"
@@ -37,6 +37,7 @@ export class HashHistory extends BaseHistory {
     }
 
     // 监听到路由改变之后 要进行跳转
+    //
     const handleRoutingEvent = () => {
       console.log("触发Vue-router 路由跳转");
       this.transitionTo(getHash(), (route) => {
