@@ -24,6 +24,7 @@
     "eventemitter3": "^4.0.7",
     "express": "^4.17.1",
     "ioredis": "^4.27.8",
+    "tailwindcss": "^3.0.8",
     "vue": "2",
     "vue-dompurify-html": "^2.3.0"
   },

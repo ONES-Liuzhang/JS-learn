@@ -1,0 +1,68 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./ParkingPort.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="main">
+      <div>
+        <button id="btn-init">初始化停车场</button>
+        <div id="port"></div>
+      </div>
+      <div>
+        <button id="btn-enter">车辆进入</button>
+      </div>
+      <div>
+        <button id="btn-enter-place">车辆进入停车位</button>
+      </div>
+    </div>
+    <script type="text/javascript">
+      const portInitBtn = document.querySelector("#btn-init");
+      const carEnterBtn = document.querySelector("#btn-enter");
+      const carEnterPlaceBtn = document.querySelector("#btn-enter-place");
+      const portEl = document.querySelector("#port");
+
+      let portInstance;
+      let id = 0;
+      portInitBtn.addEventListener("click", () => {
+        if (portInstance) return console.log(portInstance);
+        const camera = new Camera();
+        const screen = new Screen();
+        const floor1 = new Floor();
+        const floor2 = new Floor();
+        const floor3 = new Floor();
+
+        // 为每层添加10个车位
+        [floor1, floor2, floor3].forEach((floor) => {
+          for (let i = 0; i < 10; i++) {
+            floor.addPlace();
+          }
+        });
+        const manager = new PortManager();
+
+        manager.use(camera);
+        manager.use(screen);
+        manager.use(floor1);
+        manager.use(floor2);
+        manager.use(floor3);
+
+        portInstance = manager.getPortInstance();
+
+        console.log(portInstance);
+      });
+
+      carEnterBtn.addEventListener("click", () => {
+        portInstance.camera.shot(id++);
+        console.log("车辆进入", portInstance);
+      });
+
+      carEnterPlaceBtn.addEventListener("click", () => {
+        portInstance.floorList[0].placeList[0].enter(0);
+        console.log("车辆进入", portInstance);
+      });
+    </script>
+  </body>
+</html>
