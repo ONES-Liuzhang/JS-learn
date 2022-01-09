@@ -1,5 +1,6 @@
 import settle from "../core/settle";
-import { buildFullPath, buildURL, forEach } from "../utils";
+import buildFullPath from "../core/buildFullPath";
+import buildURL from "../helpers/buildURL";
 
 /**
  * 浏览器
