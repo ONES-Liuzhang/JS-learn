@@ -1,0 +1,82 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="./ball.js" type="text/javascript"></script>
+    <title>小球掉落</title>
+    <style>
+      html,
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+      #end {
+        width: 40px;
+        height: 40px;
+        position: absolute;
+        bottom: 0px;
+        left: 0px;
+        background: red;
+      }
+      #ball1,
+      #ball2,
+      #ball3,
+      #ball4,
+      #ball5 {
+        height: 10px;
+        width: 100%;
+        position: absolute;
+        left: 20px;
+        bottom: 20px;
+        visibility: hidden;
+      }
+
+      .ball div {
+        width: 10px;
+        height: 10px;
+        background: blue;
+        border-radius: 5px;
+        content: "";
+      }
+    </style>
+  </head>
+  <body>
+    <div id="end">
+      来吧
+    </div>
+    <div class="ball" id="ball1">
+      <div></div>
+    </div>
+    <div class="ball" id="ball2">
+      <div></div>
+    </div>
+    <div class="ball" id="ball3">
+      <div></div>
+    </div>
+    <div class="ball" id="ball4">
+      <div></div>
+    </div>
+    <div class="ball" id="ball5">
+      <div></div>
+    </div>
+  </body>
+  <script type="text/javascript">
+    var queue = []; // 队列
+    // 初始化 添加5个小球
+    for (let i = 0; i < 5; i++) {
+      let el = document.querySelector("div#ball" + Number(i + 1));
+      let ball = new Ball(el);
+      queue.push(ball);
+      ball.on("drop-over", (obj) => {
+        // 结束后 当前球继续加入队列
+        queue.push(obj);
+        console.log(`第${obj._uid}号球返回队列！`);
+      });
+    }
+
+    document.body.addEventListener("click", function (e) {
+      var currBall = queue.shift();
+      currBall.beforeDrop({ x: e.offsetX, y: e.offsetY });
+    });
+  </script>
+</html>

@@ -1,0 +1,68 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>嘿，就是玩儿</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div>
+        <button id="bubble">冒泡排序</button>
+        <button id="select">选择排序</button>
+        <button id="insert">插入排序</button>
+      </div>
+      <div>
+        <button id="quick">归并排序</button>
+        <button id="quick">快速排序</button>
+      </div>
+      <canvas
+        id="canvas"
+        width="1000"
+        height="1000"
+        style="background-color: #131313"
+      ></canvas>
+      <script type="module">
+        import {
+          bubbleSort,
+          quickSort,
+          selectSort,
+          insertSort,
+        } from "./sort.js";
+        import { genRandomArray } from "./core.js";
+
+        const bubble = document.getElementById("bubble");
+        const quick = document.getElementById("quick");
+        const select = document.getElementById("select");
+        const insert = document.getElementById("insert");
+
+        bubble.addEventListener("click", function btnClick() {
+          const arr = genRandomArray(720);
+          bubbleSort(arr);
+        });
+
+        quick.addEventListener("click", function btnClick() {
+          const arr = genRandomArray(720);
+          quickSort(arr);
+        });
+
+        select.addEventListener("click", function btnClick() {
+          const arr = genRandomArray(720);
+          selectSort(arr);
+        });
+
+        insert.addEventListener("click", function btnClick() {
+          const arr = genRandomArray(720);
+          insertSort(arr);
+        });
+      </script>
+    </div>
+  </body>
+</html>
