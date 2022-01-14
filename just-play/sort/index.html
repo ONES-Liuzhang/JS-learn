@@ -20,7 +20,7 @@
         <button id="insert">插入排序</button>
       </div>
       <div>
-        <button id="quick">归并排序</button>
+        <button id="merge">归并排序</button>
         <button id="quick">快速排序</button>
       </div>
       <canvas
@@ -35,22 +35,20 @@
           quickSort,
           selectSort,
           insertSort,
+          mergeSort,
         } from "./sort.js";
         import { genRandomArray } from "./core.js";
 
         const bubble = document.getElementById("bubble");
-        const quick = document.getElementById("quick");
         const select = document.getElementById("select");
         const insert = document.getElementById("insert");
+
+        const quick = document.getElementById("quick");
+        const merge = document.getElementById("merge");
 
         bubble.addEventListener("click", function btnClick() {
           const arr = genRandomArray(720);
           bubbleSort(arr);
-        });
-
-        quick.addEventListener("click", function btnClick() {
-          const arr = genRandomArray(720);
-          quickSort(arr);
         });
 
         select.addEventListener("click", function btnClick() {
@@ -61,6 +59,16 @@
         insert.addEventListener("click", function btnClick() {
           const arr = genRandomArray(720);
           insertSort(arr);
+        });
+
+        quick.addEventListener("click", function btnClick() {
+          const arr = genRandomArray(720);
+          quickSort(arr);
+        });
+
+        merge.addEventListener("click", function btnClick() {
+          const arr = genRandomArray(720);
+          console.log(mergeSort(arr));
         });
       </script>
     </div>

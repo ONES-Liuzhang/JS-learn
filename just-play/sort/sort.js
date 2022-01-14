@@ -144,3 +144,40 @@ export async function quickSort(arr) {
 
   await sortIn(0, arr.length - 1);
 }
+
+// 归并排序
+export function mergeSort(arr) {
+  return sort(0, arr.length);
+
+  // 前闭后开区间
+  function sort(start, end) {
+    if (start === end) {
+      return [arr[start]];
+    }
+    const mid = Math.floor((start + end) / 2);
+    const left = sort(start, mid);
+    const right = sort(mid + 1, end);
+
+    let result = [];
+    let l = 0;
+    let r = 0;
+    // 合并两个有序数组
+    while (l < left.length && r < right.length) {
+      if (left[l] < right[r]) {
+        result.push(left[l]);
+        l++;
+      } else {
+        result.push(right[r]);
+        r++;
+      }
+    }
+
+    if (l === left.length) {
+      result = result.concat(right.slice(r));
+    } else {
+      result = result.concat(left.slice(l));
+    }
+
+    return result;
+  }
+}
