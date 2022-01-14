@@ -1,0 +1,9 @@
+export const ShapeFlags = {
+  ELEMENT: 1,
+
+  FUNCTIONAL_COMPONENT: 1 << 1,
+
+  STATEFUL_COMPONENT: 1 << 2,
+
+  COMPONENT: ShapeFlag.FUNCTIONAL_COMPONENT & ShapeFlag.STATEFUL_COMPONENT,
+};
