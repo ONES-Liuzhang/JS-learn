@@ -1,26 +1,40 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div>
+    <button @click="decreament">-</button>
+    <p>{{ count }}</p>
+    <button @click="increament">+</button>
+  </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import { ref, watch } from "vue";
 
 export default {
   name: "App",
-  components: {
-    HelloWorld,
+  setup() {
+    const count = ref(0);
+
+    watch((onInvalidate) => {
+      console.log(onInvalidate);
+      onInvalidate(() => {
+        console.log("onInvalidate");
+      });
+      return count;
+    });
+
+    function increament() {
+      count.value++;
+    }
+
+    function decreament() {
+      count.value--;
+    }
+
+    return {
+      count,
+      increament,
+      decreament,
+    };
   },
 };
 </script>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
