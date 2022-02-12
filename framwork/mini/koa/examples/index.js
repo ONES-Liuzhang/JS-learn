@@ -1,13 +1,14 @@
-const Koa = require("../application.js");
-const http = require("http");
+const Koa = require("../index.js");
 
 const app = new Koa();
-http.createServer(app);
 
 app.use(async function m1(ctx, next) {
   console.log(1);
   await next();
   console.log(4);
+
+  ctx.response.statusCode = 200;
+  ctx.body = "Hello World";
 });
 
 app.use(async function m2(ctx, next) {
