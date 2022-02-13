@@ -4,8 +4,6 @@ const { readFileSync, getFileStat } = require("./utils");
 const DEFAULT_PATH = "index.html";
 
 const server = http.createServer((req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-
   const data = readFileSync(DEFAULT_PATH, { encoding: "utf-8" });
   res.setHeader("content-type", "text/html; charset=utf-8");
 
@@ -24,7 +22,7 @@ const server = http.createServer((req, res) => {
     const ifModifiedSince = req.headers["if-modified-since"];
     const stat = getFileStat(DEFAULT_PATH);
     const mtimeStr = stat.mtime.toISOString();
-    console.log("文件修改时间 ", stat.mtime);
+    console.log("文件修改时间 ", mtimeStr);
 
     if (ifModifiedSince) {
       console.log("客户端传入时间 ", ifModifiedSince);
