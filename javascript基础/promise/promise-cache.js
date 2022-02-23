@@ -1,4 +1,6 @@
 let cache = new Map();
+const cacheTime = new Map();
+const MAXAGE = 500; // 缓存过期时间 ms；
 
 // 缓存请求
 function promiseCache(target, name, descriptor) {
@@ -7,14 +9,25 @@ function promiseCache(target, name, descriptor) {
   descriptor.value = function (...args) {
     let cacheKey = name + JSON.stringify(args);
 
-    if (!cache.get(cacheKey)) {
+    if (
+      !cache.get(cacheKey) ||
+      !cacheTime.get(cacheKey) ||
+      Date.now() - cacheTime.get(cacheKey) > MAXAGE
+    ) {
       cache.set(
         cacheKey,
-        Promise.resolve(val.apply(this, args)).catch((_) => {
-          cache.set(cacheKey, null);
-        })
+        Promise.resolve(val.apply(this, args))
+          .then((res) => {
+            cacheTime.set(cacheKey, Date.now());
+            return res;
+          })
+          .catch((_) => {
+            cacheTime.set(cacheKey, null);
+            cache.set(cacheKey, null);
+          })
       );
     }
+
     return cache.get(cacheKey);
   };
 }
