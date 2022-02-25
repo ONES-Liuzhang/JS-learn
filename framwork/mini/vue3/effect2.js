@@ -28,15 +28,22 @@
  *        |- effectFn ❌ 无效的触发
  *
  * 所以每次 effectFn 执行时需要先清除和 effectFn 相关的所有依赖，再重新收集依赖
+ * 引入函数 cleanup 来删除 dep <-> effectFn 的双向引用关系
+ *
+ * ⚠️ 下面的代码会有无限循环的问题，可以看 step0 -> step1 step2 的注释
+ *
+ * 出问题的原因在于 Set 和 Map 的 forEach 函数执行过程中，如果 Set 新增了一项，那这一项也会被 forEach 遍历调用。
+ *
+ * Array 的 forEach 不会有这种问题，跟它们的 forEach 函数的内部实现相关。
  */
 let effectsMap = new WeakMap();
 let activeEffect;
 
 function effect(fn) {
   const effectFn = () => {
-    cleanup(effectFn);
+    cleanup(effectFn); // step1 🔥 删除了 effectFn <-> dep 的双向依赖
     activeEffect = effectFn;
-    fn();
+    fn(); // step2 🔥 又添加了 effectFn <-> dep 的双向依赖
   };
 
   effectFn.deps = [];
@@ -83,6 +90,8 @@ function trigger(target, key) {
 
   const deps = depsMap.get(key);
 
+  // step0
+  // 这里的 forEach 会导致 step1 和 step2 执行，deps 删除了依赖，又增加了一个依赖，导致forEach一直无法结束
   deps && deps.forEach((effectFn) => effectFn());
 }
 
