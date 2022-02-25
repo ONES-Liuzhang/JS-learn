@@ -6,6 +6,37 @@
     <title>Document</title>
   </head>
   <body>
-    <script type="module" src="./demo.js"></script>
+    <div id="app"></div>
+    <!-- <script type="module" src="./demo.js"></script> -->
+    <script type="module">
+      import { renderer } from "./renderer.js";
+      function handleClick() {
+        alert("点击事件触发！");
+      }
+      renderer(
+        {
+          tag: "div",
+          props: {
+            class: ["cls", "cls2"],
+            style: {
+              display: "flex",
+              color: "red",
+            },
+            onClick: handleClick,
+          },
+          children: [
+            {
+              tag: "button",
+              children: "button",
+            },
+            {
+              tag: "p",
+              children: "helloWorld",
+            },
+          ],
+        },
+        document.querySelector("#app")
+      );
+    </script>
   </body>
 </html>
