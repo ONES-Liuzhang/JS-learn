@@ -1,36 +1,101 @@
 /**
- * 循环调用
+ * effect 嵌套
  *
- * 下面这个例子，我们期望的是它只被触发一次，实际上会无限循环触发
- * effect(function effectFn() {
- *    obj.num ++
+ * 嵌套执行是很常见的，比如 effect5 中提到的 render 函数，由于 VNode 构建的是树型结构，
+ * 当父组件中包含子组件时，一定会出现嵌套调用的关系
+ *
+ * render 的嵌套例子：父组件 Foo，子组件 Bar
+ * effect(() => {
+ *    Foo.render()
+ *    effect(() => {
+ *      Bar.render()
+ *    })
  * })
  *
- * js 的运行顺序是，先计算 = 右侧，再赋值给左侧
- * obj.num ++   =>    obj.num = obj.num + 1
+ * 可以写个 demo 来试一下：
+ * obj: {
+ *   foo: 'foo',
+ *   bar: 'bar'
+ * }
+ * let temp1, temp2
+ * effect(function effectFn1() {
+ *    console.log("effectFn1 执行")
  *
- * 执行步骤
- * 1. effectFn 执行        ⬅️ ⬅️ ⬅️ ⬅️ ⬅️ ⬅️ ⬅️ ⬅️ ⬅️ ⬅️ ⬅️ ⬅️ ⬆️
- * 2. track：obj.num getter触发，收集依赖            ⬆️
- *    |- obj                                      ⬆️
- *      |- num                                    ⬆️
- *        |- effectFn                             ⬆️
- * 3. trigger：obj.num = num + 1 setter触发，[effectFn 执行]
+ *    effect(function effectFn2() {
+ *        console.log("effectFn2 执行")
+ *        temp1 = obj.bar
+ *    })
  *
- * 问题出在第三步 trigger 不应该再去触发 effectFn
+ *    temp2 = obj.foo
+ * })
+ *
+ * obj.foo = 'foo update'
+ *
+ * 分析：
+ * effectFn1 内嵌套了 effectFn2，effectFn1 执行时，很明显 effectFn2 也会执行
+ * 但是反过来，如果 effectFn2 执行了，并不会让 effectFn1 执行
+ * 此时的依赖关系：
+ * |- obj
+ *  |- foo
+ *    |- effectFn1
+ *  |- bar
+ *    |- effectFn2
+ *
+ * 修改 obj.foo 的值时，会先执行 effectFn1，然后由于嵌套关系，会再执行 effectFn2
+ * 我们预期的：
+ * effectFn1 执行
+ * effectFn2 执行  (上面两句是初始化的时候执行的，下面是trigger触发执行的打印)
+ * effectFn1 执行
+ * effectFn2 执行
+ *
+ * 但是实际上的执行是这样的：
+ * effectFn1 执行
+ * effectFn2 执行  (上面两句是初始化的时候执行的，下面是trigger触发执行的打印)
+ * effectFn2 执行
+ *
+ * 分析：
+ * 每次 effectFn 调用时会更新 activeEffect
+ * 但是由于嵌套的存在，effectFn2 执行时会使 activeEffect = effectFn2
+ *
+ * effect(function effectFn1() {
+ *   console.log("effectFn1 执行")   // activeEffect -> effectFn1
+ *
+ *   effect(function effectFn2() {
+ *       console.log("effectFn2 执行")  // activeEffect -> effectFn2
+ *       temp1 = obj.bar
+ *   })
+ *
+ *   temp2 = obj.foo      // 问题所在👉 activeEffect -> effectFn2，此时 foo 字段收集的是 effectFn2
+ * })
+ *
+ * 最终依赖是这样的
+ * |- obj
+ *  |- foo
+ *    |- effectFn2  ❌ 这里和预期不一致
+ *  |- bar
+ *    |- effectFn2
+ *
+ * 解决方法：
+ * 用栈(effectStack)来按执行顺序保留 activeEffect，当函数执行完后就出栈，保证 activeEffect 的正确性
  *
  */
 let effectsMap = new WeakMap();
 let activeEffect;
 
+// 新增
+const effectStack = [];
+
 function effect(fn) {
   const effectFn = () => {
-    if (activeEffect === effectFn) return;
-
     cleanup(effectFn);
     activeEffect = effectFn;
+    // 新增 入栈
+    effectStack.push(activeEffect);
     fn();
-    activeEffect = null;
+    // 执行完就出栈
+    effectStack.pop();
+    // 恢复 activeEffect
+    activeEffect = effectStack[effectStack.length - 1];
   };
 
   effectFn.deps = [];
@@ -39,7 +104,8 @@ function effect(fn) {
 }
 
 const obj = {
-  num: 0,
+  foo: "foo",
+  bar: "bar",
 };
 const proxy = new Proxy(obj, {
   get(target, key) {
@@ -97,7 +163,16 @@ function cleanup(effect) {
 }
 
 /** -------------- demo -------------- */
-effect(() => {
-  proxy.num++;
-  console.log(proxy.num);
+let temp1, temp2;
+effect(function effectFn1() {
+  console.log("effectFn1 执行");
+
+  effect(function effectFn2() {
+    console.log("effectFn2 执行");
+    temp1 = proxy.bar;
+  });
+
+  temp2 = proxy.foo;
 });
+
+proxy.foo = "foo update";

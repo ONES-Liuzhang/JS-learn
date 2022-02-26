@@ -44,7 +44,6 @@ function effect(fn) {
     cleanup(effectFn); // step1 🔥 删除了 effectFn <-> dep 的双向依赖
     activeEffect = effectFn;
     fn(); // step2 🔥 又添加了 effectFn <-> dep 的双向依赖
-    activeEffect = null;
   };
 
   effectFn.deps = [];
