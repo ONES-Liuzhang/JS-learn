@@ -1,7 +1,7 @@
 /**
  * effect 嵌套
  *
- * 嵌套执行是很常见的，比如 effect5 中提到的 render 函数，由于 VNode 构建的是树型结构，
+ * 嵌套执行是很常见的，比如 render 函数，render 函数也是一个 effectFn，由于 VNode 构建的是树型结构，
  * 当父组件中包含子组件时，一定会出现嵌套调用的关系
  *
  * render 的嵌套例子：父组件 Foo，子组件 Bar
@@ -48,7 +48,7 @@
  * effectFn1 执行
  * effectFn2 执行
  *
- * 但是实际上的执行是这样的：
+ * 但是实际上按照 effect3 中的代码跑起来的执行结果是这样的：
  * effectFn1 执行
  * effectFn2 执行  (上面两句是初始化的时候执行的，下面是trigger触发执行的打印)
  * effectFn2 执行

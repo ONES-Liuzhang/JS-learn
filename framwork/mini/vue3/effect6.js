@@ -45,19 +45,23 @@
  */
 let effectsMap = new WeakMap();
 let activeEffect;
+const effectStack = [];
 
 function effect(fn, options = {}) {
   const effectFn = () => {
-    if (activeEffect === effectFn) return;
-
     cleanup(effectFn);
+
     activeEffect = effectFn;
+    effectStack.push(activeEffect);
+
     fn();
-    activeEffect = null;
+
+    effectStack.pop();
+    activeEffect = effectStack[effectStack.length - 1];
   };
 
   effectFn.deps = [];
-  // step0 在初始化 effectFn 的时候设置一个配置函数来传参 -> step1 调用
+  // 新增
   effectFn.options = options;
   effectFn();
   return effectFn;
@@ -106,11 +110,11 @@ function trigger(target, key) {
     const effectsToRun = new Set(deps);
     effectsToRun.forEach((effectFn) => {
       if (activeEffect !== effectFn) {
-        // step1 调用的时候，如果有 scheduler 则使用传入的调度函数决定如何调用 effectFn
+        // 新增 scheduler
         if (effectFn.options.scheduler) {
           effectFn.options.scheduler(effectFn);
         } else {
-          // step1 否则同步调用
+          // 默认同步执行
           effectFn();
         }
       }

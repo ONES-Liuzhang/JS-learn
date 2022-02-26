@@ -18,7 +18,12 @@
  * 3. trigger：obj.num = num + 1 setter触发，[effectFn 执行]
  *
  * 问题出在第三步 trigger 不应该再去触发 effectFn
+ * 换句话说，当 effectFn 正在执行的时候，如果出现再次触发 effectFn 的情况，应该制止，否则会死循环
  *
+ * 问：怎么判断 effectFn 正在执行呢？
+ * 答：可以通过 effectFn === activeEffect 来判断
+ *
+ * 那这个逻辑就明了了，只需要在 trigger 函数中进行一下判断即可
  */
 let effectsMap = new WeakMap();
 let activeEffect;
@@ -83,6 +88,7 @@ function trigger(target, key) {
   if (deps) {
     const effectsToRun = new Set(deps);
     effectsToRun.forEach((effectFn) => {
+      // 新增 当 effectFn 正在执行的时候，如果出现再次触发 effectFn 的情况，应该制止
       if (activeEffect !== effectFn) {
         effectFn();
       }
