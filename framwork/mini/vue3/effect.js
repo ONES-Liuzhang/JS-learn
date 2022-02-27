@@ -9,6 +9,8 @@ let effectsMap = new WeakMap();
 let activeEffect;
 const effectStack = [];
 
+const ITERATE_KEY = Symbol();
+
 function effect(fn, options = {}) {
   const effectFn = () => {
     cleanup(effectFn);
@@ -56,24 +58,39 @@ function track(target, key) {
   activeEffect.deps.push(dep);
 }
 
-function trigger(target, key) {
+// type 用于标识触发 trigger 时是否新增了属性，如果新增，则需要执行 ITERATE_KEY 对应的依赖
+function trigger(target, key, type) {
   const depsMap = effectsMap.get(target);
   if (!depsMap) return;
 
   const deps = depsMap.get(key);
 
-  if (deps) {
-    const effectsToRun = new Set(deps);
-    effectsToRun.forEach((effectFn) => {
+  const effectsToRun = new Set();
+  deps &&
+    deps.forEach((effectFn) => {
       if (activeEffect !== effectFn) {
-        if (effectFn.options.scheduler) {
-          effectFn.options.scheduler(effectFn);
-        } else {
-          effectFn();
-        }
+        effectsToRun.add(effectFn);
       }
     });
+
+  // 新增属性时才触发
+  if (type === "ADD") {
+    const iterateEffects = depsMap.get(ITERATE_KEY);
+    iterateEffects &&
+      iterateEffects.forEach((effectFn) => {
+        if (activeEffect !== effectFn) {
+          effectsToRun.add(effectFn);
+        }
+      });
   }
+
+  effectsToRun.forEach((effectFn) => {
+    if (effectFn.options.scheduler) {
+      effectFn.options.scheduler(effectFn);
+    } else {
+      effectFn();
+    }
+  });
 }
 
 // 清空 dep <-> effectFn 的双向依赖
@@ -92,4 +109,5 @@ module.exports = {
   track,
   trigger,
   activeEffect,
+  ITERATE_KEY,
 };
