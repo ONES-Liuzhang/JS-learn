@@ -73,8 +73,8 @@ function trigger(target, key, type) {
       }
     });
 
-  // 新增属性时才触发
-  if (type === "ADD") {
+  // 新增或删除属性时才触发 for in 的改变
+  if (type === "ADD" || type === "DELETE") {
     const iterateEffects = depsMap.get(ITERATE_KEY);
     iterateEffects &&
       iterateEffects.forEach((effectFn) => {

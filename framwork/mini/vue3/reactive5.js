@@ -1,28 +1,21 @@
 /**
- * 代理 for in
+ * 原型链可能导致的多次触发问题
  *
- * for(let k in obj) 内部会调用 Reflect.ownKeys
- * 对应的 Proxy 代理的方法也是 ownKeys
- *
- * 使用 ITERATE_KEY 来标识触发了 for in，并调用 track 收集当前的副作用函数
- *
- * effect(function effectFn() {
- *    for(const k in obj) {
- *        // 其他逻辑
- *    }
+ * 举例：
+ * const obj = reactive({
+ *    foo: "foo"
+ * })
+ * const proto = reactive({
+ *    bar: "bar"
  * })
  *
- * |- obj
- *  |- ITERATE_KEY
- *    |- effectFn
+ * Object.setPrototypeOf(obj, proto)
  *
- * 何时触发？新增和删除都改变了 obj 的长度，for in 应该要重新执行
- * 1.新增属性 -> set
- * 2.删除属性 -> delete 对应 Proxy 的 deleteProperty
+ * effect(() => {
+ *    console.log(obj.bar)
+ * })
  *
- * ⚠️ 注意，在仅仅修改属性值时不应该触发 effectFn
- *
- * 跳转到 effect.js 并且修改 trigger 的内容
+ * obj.bar = "bar2"
  *
  */
 const { track, trigger, ITERATE_KEY, effect } = require("./effect.js");
@@ -30,13 +23,16 @@ const { track, trigger, ITERATE_KEY, effect } = require("./effect.js");
 function reactive(obj) {
   return new Proxy(obj, {
     get(target, key, receiver) {
+      // 让 proxy.raw 指向源对象
+      if (key === "raw") {
+        return target;
+      }
+
       track(target, key);
-      // receiver 可以简单理解为 this
       return Reflect.get(target, key, receiver);
     },
     set(target, key, val, receiver) {
       let oldVal = target[key];
-      // 判断 set 是新增了属性还是改变了属性
       const type = Object.prototype.hasOwnProperty.call(target, key)
         ? "SET"
         : "ADD";
@@ -44,7 +40,12 @@ function reactive(obj) {
       const res = Reflect.set(target, key, val, receiver);
 
       // oldVal 和 val 不相等，并且都不是 NaN 的情况下才更新
-      if (oldVal !== val && (oldVal === oldVal || val === val)) {
+      // receiver.raw === target，表示当前触发的 setter 是对象本身触发的，而不是原型链上的属性触发
+      if (
+        receiver.raw === target &&
+        oldVal !== val &&
+        (oldVal === oldVal || val === val)
+      ) {
         trigger(target, key, type);
       }
 
@@ -79,14 +80,14 @@ const obj = reactive({
   foo: "foo",
 });
 
-effect(function effectFn() {
-  console.log("触发");
-  for (const k in obj) {
-    // 其他逻辑
-    obj[k];
-  }
+const proto = reactive({
+  bar: "bar",
 });
 
-// obj.foo = "bar";
-// obj.bar = "aa";
-delete obj.foo;
+Object.setPrototypeOf(obj, proto);
+
+effect(() => {
+  console.log(obj.bar);
+});
+
+obj.bar = "bar2";
