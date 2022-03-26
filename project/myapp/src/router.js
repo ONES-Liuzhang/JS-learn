@@ -21,9 +21,9 @@ const routes = [
         component: () => import("@/components/bar.vue"),
       },
       {
-        path: "hello",
-        name: "hello",
-        component: () => import("@/components/hello-world.vue"),
+        path: "selectTree",
+        name: "selectTree",
+        component: () => import("@/components/element-select"),
       },
     ],
   },

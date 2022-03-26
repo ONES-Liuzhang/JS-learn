@@ -25,10 +25,6 @@ function ZFormCreate(Form) {
       };
     };
 
-    const validateField = (field, callback) => {
-      const rule = rules[field];
-    };
-
     const validate = (callback) => {
       fields.forEach((field) => {});
     };

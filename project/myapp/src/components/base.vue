@@ -33,8 +33,5 @@ export default {
       return this.width + "px";
     },
   },
-  mounted() {
-    debugger;
-  },
 };
 </script>

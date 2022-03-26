@@ -34,4 +34,4 @@ export function ZForm(props) {
   );
 }
 
-export default ZFormCreate(ZForm);
+export default ZForm;
