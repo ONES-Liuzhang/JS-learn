@@ -1,4 +1,4 @@
-#! /usr/bin/env node
+#!/usr/bin/env node
 const Compiler = require("../compiler");
 const config = require("../webpack.conf");
 
