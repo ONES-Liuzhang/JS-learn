@@ -160,6 +160,7 @@ function isPromiseLike(promise) {
  * 6. resolve -> then callback -> 加入微任务队列
  * 7. setTimeout1 执行结束
  * 8. 微任务队列 取出 then callback
+ * 9. 宏任务 取出 setTimeout2 执行
  */
 const test = new MyPromise((resolve) => {
   setTimeout(() => resolve(111), 1000);

@@ -22,7 +22,7 @@ class Compiler {
 
     this.modules[modulePath] = sourceCode;
 
-    // 3.递归加载
+    // 3.递归加载依赖
     dependencies.forEach((depPath) => {
       this.buildModule(depPath);
     });
