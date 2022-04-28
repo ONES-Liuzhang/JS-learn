@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@types/debounce': ^1.2.1
   autoprefixer: ^10.4.2
   babel: ^6.23.0
   babel-plugin-transform-decorators-legacy: ^1.3.5
@@ -9,6 +10,7 @@ specifiers:
   eventemitter3: ^4.0.7
   express: ^4.17.1
   ioredis: ^4.27.8
+  lodash-es: ^4.17.21
   mobx: ^6.3.13
   mobx-state-tree: ^5.1.0
   nodemon: ^2.0.15
@@ -29,6 +31,7 @@ dependencies:
   eventemitter3: registry.npmmirror.com/eventemitter3/4.0.7
   express: registry.npmmirror.com/express/4.17.3
   ioredis: registry.npmmirror.com/ioredis/4.28.5
+  lodash-es: registry.npmmirror.com/lodash-es/4.17.21
   mobx: registry.npmmirror.com/mobx/6.4.2
   mobx-state-tree: registry.npmmirror.com/mobx-state-tree/5.1.3_mobx@6.4.2
   puppeteer: registry.npmmirror.com/puppeteer/13.5.2
@@ -37,6 +40,7 @@ dependencies:
   vue-dompurify-html: registry.npmmirror.com/vue-dompurify-html/2.5.0_vue@2.6.14
 
 devDependencies:
+  '@types/debounce': registry.npmmirror.com/@types/debounce/1.2.1
   autoprefixer: registry.npmmirror.com/autoprefixer/10.4.2_postcss@8.4.7
   babel-plugin-transform-decorators-legacy: registry.npmmirror.com/babel-plugin-transform-decorators-legacy/1.3.5
   babel-preset-env: registry.npmmirror.com/babel-preset-env/1.7.0
@@ -528,6 +532,12 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       defer-to-connect: registry.npmmirror.com/defer-to-connect/1.1.3
+    dev: true
+
+  registry.npmmirror.com/@types/debounce/1.2.1:
+    resolution: {integrity: sha512-epMsEE85fi4lfmJUH/89/iV/LI+F5CvNIvmgs5g5jYFPfhO2S/ae8WSsLOKWdwtoaZw9Q2IhJ4tQ5tFCcS/4HA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/debounce/-/debounce-1.2.1.tgz}
+    name: '@types/debounce'
+    version: 1.2.1
     dev: true
 
   registry.npmmirror.com/@types/node/17.0.23:
@@ -2939,6 +2949,12 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       p-locate: registry.npmmirror.com/p-locate/4.1.0
+    dev: false
+
+  registry.npmmirror.com/lodash-es/4.17.21:
+    resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/lodash-es/-/lodash-es-4.17.21.tgz}
+    name: lodash-es
+    version: 4.17.21
     dev: false
 
   registry.npmmirror.com/lodash.defaults/4.2.0:
