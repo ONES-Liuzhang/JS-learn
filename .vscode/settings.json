@@ -1,7 +1,6 @@
 {
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
-  "auto-rename-tag.activationOnLanguage": ["html", "xml", "php", "javascript"],
   "emmet.includeLanguages": {
     "ejs": "html"
   }
